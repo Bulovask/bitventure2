@@ -80,6 +80,35 @@ export const QuestaoService = {
     return { nivel: 4, concluido: true };
   },
 
+  async listarTodas() {
+    return QuestaoRepository.findAll();
+  },
+
+  async buscarPorId(id: number) {
+    return QuestaoRepository.findById(id);
+  },
+
+  async criarQuestao(data: {
+    nivel: number;
+    tipo: string;
+    enunciado: string;
+    respostaCorreta: string;
+    ativo?: boolean;
+  }) {
+    return QuestaoRepository.create({
+      ...data,
+      origem: 'BANCO',
+    });
+  },
+
+  async atualizarQuestao(id: number, data: any) {
+    return QuestaoRepository.update(id, data);
+  },
+
+  async excluirQuestao(id: number) {
+    return QuestaoRepository.deleteLogico(id);
+  },
+
   async gerarQuestaoProcedural(nivel: number) {
     const config = await ConfiguracaoRepository.get();
     

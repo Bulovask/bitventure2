@@ -1,11 +1,32 @@
 import { prisma } from '../database/prisma';
 
 export const QuestaoRepository = {
+  async findAll() {
+    return prisma.questao.findMany({
+      where: {
+        excluido: false,
+      },
+      orderBy: {
+        id: 'desc',
+      },
+    });
+  },
+
+  async findById(id: number) {
+    return prisma.questao.findUnique({
+      where: {
+        id,
+        excluido: false,
+      },
+    });
+  },
+
   async findByNivel(nivel: number) {
     return prisma.questao.findMany({
       where: {
         nivel,
         ativo: true,
+        excluido: false,
       },
     });
   },
@@ -16,6 +37,7 @@ export const QuestaoRepository = {
       where: {
         nivel,
         ativo: true,
+        excluido: false,
         sorteios: {
           none: {
             alunoId,
@@ -31,9 +53,30 @@ export const QuestaoRepository = {
     enunciado: string;
     respostaCorreta: string;
     origem: string;
+    ativo?: boolean;
   }) {
     return prisma.questao.create({
+      data: {
+        ...data,
+        excluido: false,
+      },
+    });
+  },
+
+  async update(id: number, data: any) {
+    return prisma.questao.update({
+      where: { id },
       data,
+    });
+  },
+
+  async deleteLogico(id: number) {
+    return prisma.questao.update({
+      where: { id },
+      data: {
+        excluido: true,
+        ativo: false,
+      },
     });
   },
 };

@@ -34,6 +34,7 @@ model Questao {
   respostaCorreta  String
   origem           String        @default("BANCO") // Using String instead of Enum
   ativo            Boolean       @default(true)
+  excluido         Boolean       @default(false)
   criadaEm         DateTime      @default(now())
 
   sorteios         Sorteio[]
