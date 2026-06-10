@@ -1,0 +1,89 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Aluno {
+  id                Int       @id @default(autoincrement())
+  nome              String
+  pontuacao         Int       @default(0)
+
+  inicioJogoMs      BigInt    // Unix Timestamp em milissegundos
+  fimJogoMs         BigInt?   // Unix Timestamp em milissegundos
+
+  tempoConclusaoMs  BigInt?   // Diferença em milissegundos
+
+  finalizado        Boolean   @default(false)
+
+  criadoEm          DateTime  @default(now())
+
+  sorteios          Sorteio[]
+  respostas         Resposta[]
+
+  @@index([pontuacao, tempoConclusaoMs])
+}
+
+model Questao {
+  id               Int           @id @default(autoincrement())
+  nivel            Int
+  tipo             String        // Prisma SQLite doesn't support enums well, using String
+  enunciado        String
+  respostaCorreta  String
+  origem           String        @default("BANCO") // Using String instead of Enum
+  ativo            Boolean       @default(true)
+  criadaEm         DateTime      @default(now())
+
+  sorteios         Sorteio[]
+  respostas        Resposta[]
+}
+
+model Configuracao {
+  id                    Int       @id @default(1)
+
+  qtdNivel1             Int
+  qtdNivel2             Int
+  qtdNivel3             Int
+  qtdNivel4             Int
+
+  faixaMinNivel1        Int       @default(0)
+  faixaMaxNivel1        Int       @default(255)
+
+  tamanhoMinPalavra     Int       @default(3)
+  tamanhoMaxPalavra     Int       @default(8)
+
+  tempoParadaMs         Int       @default(120000) // 2 minutos em ms
+
+  partidaEncerrada      Boolean   @default(false)
+  paradaAcionadaEmMs    BigInt?
+}
+
+model Sorteio {
+  id          Int      @id @default(autoincrement())
+  alunoId     Int
+  questaoId   Int
+  sorteadoEmMs BigInt
+
+  aluno       Aluno    @relation(fields: [alunoId], references: [id])
+  questao     Questao  @relation(fields: [questaoId], references: [id])
+
+  @@unique([alunoId, questaoId])
+  @@index([alunoId])
+}
+
+model Resposta {
+  id              Int      @id @default(autoincrement())
+  alunoId         Int
+  questaoId       Int
+  resposta        String
+  correta         Boolean
+  pontosGanhos    Int
+  respondidaEmMs  BigInt
+
+  aluno           Aluno   @relation(fields: [alunoId], references: [id])
+  questao         Questao @relation(fields: [questaoId], references: [id])
+
+  @@index([alunoId])
+}
