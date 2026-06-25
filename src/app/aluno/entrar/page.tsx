@@ -2,12 +2,15 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useJogoStore } from "@/src/store/useGameStore";
 
 export default function EntrarPartida() {
   const [nome, setNome] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+  const setNomeStore = useJogoStore((state) => state.setNome);
+  const setTela = useJogoStore((state) => state.setTela);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +34,10 @@ export default function EntrarPartida() {
 
       // Armazena dados do aluno para persistência na sessão
       localStorage.setItem('bitventure_aluno', JSON.stringify(data));
+      
+      // Atualiza o Zustand Store
+      setNomeStore(data.nome);
+      setTela('fases');
 
       // Redireciona para a tela de jogo
       router.push('/aluno/jogo');
