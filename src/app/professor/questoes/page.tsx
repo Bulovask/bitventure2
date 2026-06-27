@@ -53,6 +53,115 @@ const instructions: Record<string, { enunciado: string; resposta: string; exempl
   }
 };
 
+// Funções utilitárias para conversão automática em tempo real
+const convertEnunciadoToResposta = (enunciado: string, tipo: string): string => {
+  const cleanVal = enunciado.trim();
+  if (!cleanVal) return '';
+
+  try {
+    switch (tipo) {
+      case 'BINARIO_DECIMAL': {
+        const clean = cleanVal.replace(/[^01]/g, '');
+        if (!clean) return '';
+        const dec = parseInt(clean, 2);
+        return isNaN(dec) ? '' : dec.toString();
+      }
+      case 'DECIMAL_BINARIO': {
+        const dec = parseInt(cleanVal, 10);
+        if (isNaN(dec) || dec < 0) return '';
+        return dec.toString(2).padStart(8, '0');
+      }
+      case 'BINARIO_ASCII': {
+        const clean = cleanVal.replace(/[^01]/g, '');
+        if (!clean) return '';
+        const dec = parseInt(clean, 2);
+        if (isNaN(dec) || dec < 0 || dec > 255) return '';
+        return String.fromCharCode(dec).toUpperCase();
+      }
+      case 'ASCII_BINARIO': {
+        if (cleanVal.length === 0) return '';
+        const char = cleanVal.charAt(0).toUpperCase();
+        return char.charCodeAt(0).toString(2).padStart(8, '0');
+      }
+      case 'BINARIO_PALAVRA': {
+        const bytes = cleanVal.split(/\s+/);
+        return bytes
+          .map(byte => {
+            const cleanByte = byte.replace(/[^01]/g, '');
+            if (!cleanByte) return '';
+            const dec = parseInt(cleanByte, 2);
+            return isNaN(dec) || dec < 32 || dec > 255 ? '' : String.fromCharCode(dec).toUpperCase();
+          })
+          .join('');
+      }
+      case 'DECIMAL_PALAVRA': {
+        const nums = cleanVal.split(/\s+/);
+        return nums
+          .map(num => {
+            const dec = parseInt(num, 10);
+            return isNaN(dec) || dec < 32 || dec > 255 ? '' : String.fromCharCode(dec).toUpperCase();
+          })
+          .join('');
+      }
+      default:
+        return '';
+    }
+  } catch (e) {
+    return '';
+  }
+};
+
+const convertRespostaToEnunciado = (resposta: string, tipo: string): string => {
+  const cleanVal = resposta.trim();
+  if (!cleanVal) return '';
+
+  try {
+    switch (tipo) {
+      case 'BINARIO_DECIMAL': {
+        const dec = parseInt(cleanVal, 10);
+        if (isNaN(dec) || dec < 0) return '';
+        return dec.toString(2).padStart(8, '0');
+      }
+      case 'DECIMAL_BINARIO': {
+        const clean = cleanVal.replace(/[^01]/g, '');
+        if (!clean) return '';
+        const dec = parseInt(clean, 2);
+        return isNaN(dec) ? '' : dec.toString();
+      }
+      case 'BINARIO_ASCII': {
+        if (cleanVal.length === 0) return '';
+        const char = cleanVal.charAt(0).toUpperCase();
+        return char.charCodeAt(0).toString(2).padStart(8, '0');
+      }
+      case 'ASCII_BINARIO': {
+        const clean = cleanVal.replace(/[^01]/g, '');
+        if (!clean) return '';
+        const dec = parseInt(clean, 2);
+        if (isNaN(dec) || dec < 0 || dec > 255) return '';
+        return String.fromCharCode(dec).toUpperCase();
+      }
+      case 'BINARIO_PALAVRA': {
+        return cleanVal
+          .toUpperCase()
+          .split('')
+          .map(char => char.charCodeAt(0).toString(2).padStart(8, '0'))
+          .join(' ');
+      }
+      case 'DECIMAL_PALAVRA': {
+        return cleanVal
+          .toUpperCase()
+          .split('')
+          .map(char => char.charCodeAt(0).toString(10))
+          .join(' ');
+      }
+      default:
+        return '';
+    }
+  } catch (e) {
+    return '';
+  }
+};
+
 export default function QuestoesPagina() {
   const [questoes, setQuestoes] = useState<Questao[]>([]);
   const [loading, setLoading] = useState(true);
@@ -88,6 +197,18 @@ export default function QuestoesPagina() {
       ...prev,
       nivel,
       tipo: novoTipo,
+      enunciado: '',
+      respostaCorreta: '',
+    }));
+    setSugestaoGerada(false);
+  };
+
+  const handleTipoChange = (tipo: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      tipo,
+      enunciado: '',
+      respostaCorreta: '',
     }));
     setSugestaoGerada(false);
   };
@@ -156,6 +277,32 @@ export default function QuestoesPagina() {
       respostaCorreta: ''
     }));
     setSugestaoGerada(false);
+  };
+
+  const handleEnunciadoChange = (val: string) => {
+    if (val === '') {
+      setFormData(prev => ({ ...prev, enunciado: '', respostaCorreta: '' }));
+      return;
+    }
+    const calculatedResposta = convertEnunciadoToResposta(val, formData.tipo);
+    setFormData(prev => ({
+      ...prev,
+      enunciado: val,
+      respostaCorreta: calculatedResposta !== '' ? calculatedResposta : prev.respostaCorreta
+    }));
+  };
+
+  const handleRespostaChange = (val: string) => {
+    if (val === '') {
+      setFormData(prev => ({ ...prev, respostaCorreta: '', enunciado: '' }));
+      return;
+    }
+    const calculatedEnunciado = convertRespostaToEnunciado(val, formData.tipo);
+    setFormData(prev => ({
+      ...prev,
+      respostaCorreta: val,
+      enunciado: calculatedEnunciado !== '' ? calculatedEnunciado : prev.enunciado
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -237,10 +384,7 @@ export default function QuestoesPagina() {
                 <label className="block text-sm font-medium mb-2">Tipo de Questão</label>
                 <select
                   value={formData.tipo}
-                  onChange={(e) => {
-                    setFormData({ ...formData, tipo: e.target.value });
-                    setSugestaoGerada(false);
-                  }}
+                  onChange={(e) => handleTipoChange(e.target.value)}
                   className="w-full bg-gray-700 border border-gray-600 rounded p-2 outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                 >
                   {(mapNivelParaTipos[formData.nivel] || []).map(t => (
@@ -273,10 +417,13 @@ export default function QuestoesPagina() {
               )}
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium mb-2">Enunciado</label>
+                <label className="block text-sm font-medium mb-2">
+                  Enunciado 
+                  <span className="text-[10px] text-gray-400 ml-2 font-normal">(Sincroniza Resposta automaticamente)</span>
+                </label>
                 <textarea
                   value={formData.enunciado}
-                  onChange={(e) => setFormData({ ...formData, enunciado: e.target.value })}
+                  onChange={(e) => handleEnunciadoChange(e.target.value)}
                   className="w-full bg-gray-700 border border-gray-600 rounded p-2 h-24 outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                   placeholder="Insira o enunciado da questão..."
                   required
@@ -284,11 +431,14 @@ export default function QuestoesPagina() {
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium mb-2">Resposta Correta</label>
+                <label className="block text-sm font-medium mb-2">
+                  Resposta Correta
+                  <span className="text-[10px] text-gray-400 ml-2 font-normal">(Sincroniza Enunciado automaticamente)</span>
+                </label>
                 <input
                   type="text"
                   value={formData.respostaCorreta}
-                  onChange={(e) => setFormData({ ...formData, respostaCorreta: e.target.value })}
+                  onChange={(e) => handleRespostaChange(e.target.value)}
                   className="w-full bg-gray-700 border border-gray-600 rounded p-2 outline-none focus:ring-2 focus:ring-blue-500 font-mono"
                   placeholder="Insira a resposta correta esperada..."
                   required
