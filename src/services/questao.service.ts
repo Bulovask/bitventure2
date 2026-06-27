@@ -34,12 +34,18 @@ export const QuestaoService = {
     return sorteada;
   },
 
-  async responderQuestao(alunoId: number, questaoId: number, resposta: string) {
+  async responderQuestao(alunoId: number, questaoId: number, resposta: string, resultado?: number) {
     const questao = await prisma.questao.findUnique({ where: { id: questaoId } });
     if (!questao) throw new Error('Questão não encontrada');
 
-    const correta = questao.respostaCorreta.trim().toLowerCase() === resposta.trim().toLowerCase();
-    const pontosGanhos = correta ? 10 : 0; // Valor de pontos simplificado para esta fase
+    let finalResultado = resultado;
+    if (finalResultado === undefined) {
+      const correta = questao.respostaCorreta.trim().toLowerCase() === resposta.trim().toLowerCase();
+      finalResultado = correta ? 1 : -1;
+    }
+
+    const correta = finalResultado === 1;
+    const pontosGanhos = finalResultado; // -1 erro, 0 pulado/tempo esgotado, 1 acerto
 
     // Registrar a resposta
     await RespostaRepository.create({
@@ -47,37 +53,46 @@ export const QuestaoService = {
       questaoId,
       resposta,
       correta,
+      resultado: finalResultado,
       pontosGanhos,
     });
 
-    // Atualizar pontuação do aluno
-    if (correta) {
-      await AlunoRepository.updatePontuacao(alunoId, pontosGanhos);
-    }
+    // Atualizar pontuação do aluno (pode decrementar se for -1, ou somar se for 1)
+    await AlunoRepository.updatePontuacao(alunoId, pontosGanhos);
 
-    return { correta, pontosGanhos };
+    return { correta, pontosGanhos, resultado: finalResultado };
   },
 
   async getProximaEtapa(alunoId: number) {
     const config = await ConfiguracaoRepository.get();
     if (!config) throw new Error('Configuração não encontrada');
 
+    // RN: Se a partida foi encerrada pelo professor, interrompe o fluxo do aluno
+    if (config.partidaEncerrada) {
+      return { nivel: 1, tempoLimiteSegundos: 0, concluido: false, partidaEncerrada: true };
+    }
+
     // Verifica progresso em cada nível
     const niveis = [
-      { nivel: 1, qtd: config.qtdNivel1 },
-      { nivel: 2, qtd: config.qtdNivel2 },
-      { nivel: 3, qtd: config.qtdNivel3 },
-      { nivel: 4, qtd: config.qtdNivel4 },
+      { nivel: 1, qtd: config.qtdNivel1, tempo: config.tempoNivel1 },
+      { nivel: 2, qtd: config.qtdNivel2, tempo: config.tempoNivel2 },
+      { nivel: 3, qtd: config.qtdNivel3, tempo: config.tempoNivel3 },
+      { nivel: 4, qtd: config.qtdNivel4, tempo: config.tempoNivel4 },
     ];
 
     for (const etapa of niveis) {
       const respondidas = await RespostaRepository.countPorNivel(alunoId, etapa.nivel);
       if (respondidas < etapa.qtd) {
-        return { nivel: etapa.nivel, concluido: false };
+        return { 
+          nivel: etapa.nivel, 
+          tempoLimiteSegundos: etapa.tempo, 
+          concluido: false, 
+          partidaEncerrada: false 
+        };
       }
     }
 
-    return { nivel: 4, concluido: true };
+    return { nivel: 4, tempoLimiteSegundos: 0, concluido: true, partidaEncerrada: false };
   },
 
   async listarTodas() {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { useJogoStore } from "../store/useGameStore";
 import {
   TerminalLogs,
@@ -11,6 +12,7 @@ import {
 } from "./UI";
 
 export default function Resultados() {
+  const router = useRouter();
   const {
     nome,
     pontuacao: pontos,
@@ -76,6 +78,15 @@ export default function Resultados() {
     enviarParaPlanilha();
   }, [nome, pontos, tempoFormatado, precisao, respostas]);
 
+  const handleReiniciar = () => {
+    // Limpa dados de login do aluno
+    localStorage.removeItem('bitventure_aluno');
+    // Reseta estado do Zustand
+    resetarJogo();
+    // Redireciona para tela de login de aluno
+    router.push('/aluno/entrar');
+  };
+
   return (
     <div className="flex flex-col items-start gap-4 py-2 px-4 md:px-8 font-mono animate-in fade-in duration-1000 w-full max-w-4xl mx-auto">
       <TerminalLogs
@@ -118,14 +129,25 @@ export default function Resultados() {
 
           <div className="bg-green-950/20 p-3 border border-green-900/30 rounded">
             <p className="text-[10px] text-green-800 uppercase">Resumo_Fases</p>
-            <div className="flex gap-1 mt-1">
-              {respostas.map((r, i) => (
-                <div
-                  key={i}
-                  title={`Fase ${i + 1}`}
-                  className={`w-3 h-3 border ${r === 1 ? "bg-green-500 border-green-400" : "bg-red-900 border-red-700"}`}
-                />
-              ))}
+            <div className="flex gap-1 mt-1 font-mono">
+              {respostas.map((r, i) => {
+                let colorClass = "bg-zinc-700 border-zinc-500";
+                let statusLabel = "PULO/TEMPO";
+                if (r === 1) {
+                  colorClass = "bg-green-500 border-green-400";
+                  statusLabel = "CORRETO";
+                } else if (r === -1) {
+                  colorClass = "bg-red-900 border-red-700";
+                  statusLabel = "ERRO";
+                }
+                return (
+                  <div
+                    key={i}
+                    title={`Fase ${i + 1}: ${statusLabel}`}
+                    className={`w-3 h-3 border ${colorClass}`}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
@@ -149,7 +171,7 @@ export default function Resultados() {
         <div className="flex gap-4">
           <TerminalButton
             label="REINICIAR_SISTEMA"
-            onClick={resetarJogo}
+            onClick={handleReiniciar}
             className="text-xs py-2 px-8"
           />
         </div>

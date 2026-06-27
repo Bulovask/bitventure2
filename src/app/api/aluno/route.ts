@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { AlunoService } from '../../../services/aluno.service';
+import { ConfiguracaoRepository } from '../../../repositories/configuracao.repository';
 
 export async function POST(request: Request) {
   try {
@@ -9,6 +10,14 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: 'O nome é obrigatório para entrar na partida.' },
         { status: 400 }
+      );
+    }
+
+    const config = await ConfiguracaoRepository.get();
+    if (config?.partidaEncerrada) {
+      return NextResponse.json(
+        { error: 'A partida está encerrada ou pausada pelo professor.' },
+        { status: 403 }
       );
     }
 

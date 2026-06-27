@@ -14,6 +14,10 @@ export default function ConfigPagina() {
     qtdNivel3: 0,
     qtdNivel4: 0,
     tempoParadaMs: 0,
+    tempoNivel1: 30,
+    tempoNivel2: 45,
+    tempoNivel3: 60,
+    tempoNivel4: 90,
   });
 
   useEffect(() => {
@@ -26,6 +30,10 @@ export default function ConfigPagina() {
           qtdNivel3: data.qtdNivel3,
           qtdNivel4: data.qtdNivel4,
           tempoParadaMs: data.tempoParadaMs,
+          tempoNivel1: data.tempoNivel1 ?? 30,
+          tempoNivel2: data.tempoNivel2 ?? 45,
+          tempoNivel3: data.tempoNivel3 ?? 60,
+          tempoNivel4: data.tempoNivel4 ?? 90,
         });
         setLoading(false);
       });
@@ -74,52 +82,104 @@ export default function ConfigPagina() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6 bg-gray-800 p-8 rounded-lg shadow-xl border border-gray-700">
-          <div>
-            <label className="block text-sm font-medium mb-2">Questões Nível 1</label>
-            <input
-              type="number"
-              name="qtdNivel1"
-              value={config.qtdNivel1}
-              onChange={handleChange}
-              className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
-              required
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Qtd Questões Nível 1</label>
+              <input
+                type="number"
+                name="qtdNivel1"
+                value={config.qtdNivel1}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Tempo Nível 1 (Segundos)</label>
+              <input
+                type="number"
+                name="tempoNivel1"
+                value={config.tempoNivel1}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
+                required
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">Questões Nível 2</label>
-            <input
-              type="number"
-              name="qtdNivel2"
-              value={config.qtdNivel2}
-              onChange={handleChange}
-              className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
-              required
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Qtd Questões Nível 2</label>
+              <input
+                type="number"
+                name="qtdNivel2"
+                value={config.qtdNivel2}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Tempo Nível 2 (Segundos)</label>
+              <input
+                type="number"
+                name="tempoNivel2"
+                value={config.tempoNivel2}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
+                required
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">Questões Nível 3</label>
-            <input
-              type="number"
-              name="qtdNivel3"
-              value={config.qtdNivel3}
-              onChange={handleChange}
-              className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
-              required
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Qtd Questões Nível 3</label>
+              <input
+                type="number"
+                name="qtdNivel3"
+                value={config.qtdNivel3}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Tempo Nível 3 (Segundos)</label>
+              <input
+                type="number"
+                name="tempoNivel3"
+                value={config.tempoNivel3}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
+                required
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2">Questões Nível 4</label>
-            <input
-              type="number"
-              name="qtdNivel4"
-              value={config.qtdNivel4}
-              onChange={handleChange}
-              className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
-              required
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Qtd Questões Nível 4</label>
+              <input
+                type="number"
+                name="qtdNivel4"
+                value={config.qtdNivel4}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Tempo Nível 4 (Segundos)</label>
+              <input
+                type="number"
+                name="tempoNivel4"
+                value={config.tempoNivel4}
+                onChange={handleChange}
+                className="w-full bg-gray-700 border border-gray-600 rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
+                required
+              />
+            </div>
           </div>
 
           <div>
@@ -137,7 +197,7 @@ export default function ConfigPagina() {
           <button
             type="submit"
             disabled={saving}
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded transition-colors disabled:opacity-50"
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded transition-colors disabled:opacity-50 cursor-pointer"
           >
             {saving ? 'Salvando...' : 'Salvar Alterações'}
           </button>

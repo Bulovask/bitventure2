@@ -6,6 +6,7 @@ export const RespostaRepository = {
     questaoId: number;
     resposta: string;
     correta: boolean;
+    resultado: number;
     pontosGanhos: number;
   }) {
     return prisma.resposta.create({

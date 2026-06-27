@@ -18,7 +18,7 @@ interface JogoState {
   setTela: (tela: Tela) => void;
   desbloquearSistema: () => void;
   bloquearSistema: () => void;
-  registrarFase: (pontos: number, tempoFase: number, houveErro: boolean) => void;
+  registrarFase: (pontos: number, tempoFase: number, resultado: number) => void;
   resetarJogo: () => void;
 }
 
@@ -45,11 +45,11 @@ export const useJogoStore = create<JogoState>()(
       desbloquearSistema: () => set({ sistemaBloqueado: false }),
       bloquearSistema: () => set({ sistemaBloqueado: true }),
 
-      registrarFase: (pontos, tempoFase, houveErro) =>
+      registrarFase: (pontos, tempoFase, resultado) =>
         set((state) => ({
           pontuacao: state.pontuacao + pontos,
           tempoTotal: state.tempoTotal + tempoFase,
-          respostas: [...state.respostas, houveErro ? 0 : 1],
+          respostas: [...state.respostas, resultado],
           faseAtual: state.faseAtual + 1
         })),
 

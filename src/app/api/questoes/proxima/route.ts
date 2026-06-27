@@ -12,6 +12,10 @@ export async function GET(request: Request) {
   try {
     const etapa = await QuestaoService.getProximaEtapa(Number(alunoId));
     
+    if (etapa.partidaEncerrada) {
+      return NextResponse.json({ partidaEncerrada: true });
+    }
+
     if (etapa.concluido) {
       return NextResponse.json({ concluido: true });
     }
@@ -26,6 +30,7 @@ export async function GET(request: Request) {
         enunciado: questao.enunciado,
         respostaCorreta: questao.respostaCorreta,
       },
+      tempoLimiteSegundos: etapa.tempoLimiteSegundos,
       concluido: false,
     });
   } catch (error: any) {

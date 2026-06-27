@@ -24,6 +24,9 @@ export default function Fases() {
   const [modalAberto, setModalAberto] = useState(false);
   const [questaoAtual, setQuestaoAtual] = useState<Questao | null>(null);
   const [loading, setLoading] = useState(true);
+  const [startTime, setStartTime] = useState<number>(0);
+  const [tempoLimiteTotal, setTempoLimiteTotal] = useState<number>(0);
+  const [tempoRestante, setTempoRestante] = useState<number | null>(null);
   
   const { nome: nomeAluno, faseAtual, registrarFase, setTela } = useJogoStore();
 
@@ -34,10 +37,13 @@ export default function Fases() {
       const res = await fetch(`/api/questoes/proxima?alunoId=${alunoData.id}`);
       const data = await res.json();
       
-      if (data.concluido) {
+      if (data.partidaEncerrada) {
+        setTela("resultados");
+      } else if (data.concluido) {
         setTela("resultados");
       } else {
         setQuestaoAtual(data.questao);
+        setTempoLimiteTotal(data.tempoLimiteSegundos || 30);
       }
     } catch (err) {
       console.error('Erro ao buscar questão', err);
@@ -47,31 +53,89 @@ export default function Fases() {
   }, [setTela]);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     buscarQuestao();
   }, [buscarQuestao]);
 
-  const handleAcerto = useCallback(
-    async (basePontos: number = 50, tempoMs: number, erros: number, respostaAluno: string) => {
-      // 1. Envia resposta para o backend
-      const alunoData = JSON.parse(localStorage.getItem('bitventure_aluno') || '{}');
+  useEffect(() => {
+    if (questaoAtual) {
+      setStartTime(Date.now());
+    }
+  }, [questaoAtual]);
+
+  const registrarSemResposta = useCallback(async (resultado: number) => {
+    if (!questaoAtual) return;
+
+    const alunoData = JSON.parse(localStorage.getItem('bitventure_aluno') || '{}');
+    const respostaTexto = resultado === 0 ? "PULADA" : "TEMPO_ESGOTADO";
+
+    try {
       await fetch('/api/questoes/responder', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           alunoId: alunoData.id,
           questaoId: questaoAtual.id,
-          resposta: respostaAluno 
+          resposta: respostaTexto,
+          resultado: 0 // erro: -1, pular/esgotado: 0, acerto: 1
+        })
+      });
+    } catch (err) {
+      console.error('Erro ao registrar resposta vazia', err);
+    }
+
+    const tempoGasto = Date.now() - startTime;
+    registrarFase(0, tempoGasto, 0); // 0 pontos, tempoGasto, status 0
+    buscarQuestao();
+  }, [questaoAtual, startTime, registrarFase, buscarQuestao]);
+
+  // Efeito do timer regressivo
+  useEffect(() => {
+    if (!questaoAtual || tempoLimiteTotal <= 0) {
+      setTempoRestante(null);
+      return;
+    }
+
+    setTempoRestante(tempoLimiteTotal);
+
+    const interval = setInterval(() => {
+      setTempoRestante((prev) => {
+        if (prev === null || prev <= 0) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [questaoAtual, tempoLimiteTotal]);
+
+  // Efeito de escuta quando o tempo zera
+  useEffect(() => {
+    if (tempoRestante === 0) {
+      registrarSemResposta(0);
+    }
+  }, [tempoRestante, registrarSemResposta]);
+
+  const handleAcerto = useCallback(
+    async (basePontos: number = 50, tempoMs: number, erros: number, respostaAluno: string) => {
+      if (!questaoAtual) return;
+      const alunoData = JSON.parse(localStorage.getItem('bitventure_aluno') || '{}');
+      const resultado = erros >= 3 ? -1 : 1;
+
+      await fetch('/api/questoes/responder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          alunoId: alunoData.id,
+          questaoId: questaoAtual.id,
+          resposta: respostaAluno,
+          resultado: resultado
         })
       });
 
-      // Cálculo de Bônus de Velocidade
-      const bonusVelocidade = Math.max(0, 20 - Math.floor(tempoMs / 1000));
-      const penalidade = erros * 5;
-      const pontuacaoFinal = Math.max(10, basePontos + bonusVelocidade - penalidade);
-
-      // Registra na Store
-      registrarFase(pontuacaoFinal, tempoMs, erros > 2);
+      // Registra na Store: erro vale -1, acerto vale 1
+      registrarFase(resultado, tempoMs, resultado);
       
       // Busca a próxima
       buscarQuestao();
@@ -139,11 +203,40 @@ export default function Fases() {
         items={[
           { label: "OPERADOR", value: nomeAluno || "ANÔNIMO" },
           { label: "FASE", value: `${faseAtual}` },
+          { label: "TEMPO RESTANTE", value: tempoRestante !== null ? `${tempoRestante}s` : "ILIMITADO" },
         ]}
       />
 
+      {tempoRestante !== null && (
+        <div className="w-full bg-zinc-950 border border-green-900/30 p-2 mb-4 flex justify-between items-center text-xs font-mono">
+          <span className="text-green-800 text-[10px]">SISTEMA_DURABILIDADE_DE_LINK:</span>
+          <div className="flex-1 mx-4 bg-zinc-900 h-2 border border-green-950 rounded-sm overflow-hidden relative">
+            <div
+              className={`h-full transition-all duration-1000 ${tempoRestante <= 5 ? 'bg-red-500 shadow-[0_0_10px_red]' : 'bg-green-500 shadow-[0_0_10px_#22c55e]'}`}
+              style={{ width: `${(tempoRestante / tempoLimiteTotal) * 100}%` }}
+            />
+          </div>
+          <span className={`font-bold ${tempoRestante <= 5 ? 'text-red-500 animate-pulse' : 'text-green-400'}`}>
+            {tempoRestante}s
+          </span>
+        </div>
+      )}
+
       <div className="animate-in fade-in slide-in-from-bottom-3 duration-700 ease-out">
         {renderPuzzle()}
+      </div>
+
+      <div className="mt-4 flex justify-between items-center bg-zinc-950/40 p-3 border border-green-900/20 rounded">
+        <button
+          onClick={() => registrarSemResposta(0)}
+          type="button"
+          className="group relative overflow-hidden border border-amber-600/50 px-6 py-1.5 font-bold text-amber-500 hover:text-black hover:bg-amber-500 transition-all duration-300 text-xs uppercase cursor-pointer"
+        >
+          [ PULAR_QUESTÃO ]
+        </button>
+        <p className="text-[9px] text-green-700 uppercase tracking-wider hidden sm:block">
+          // o pulo registrará 0 pontos e avançará à próxima fase
+        </p>
       </div>
 
       <div className="fixed bottom-4 right-4">

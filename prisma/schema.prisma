@@ -49,6 +49,11 @@ model Configuracao {
   qtdNivel3             Int
   qtdNivel4             Int
 
+  tempoNivel1           Int       @default(30) // tempo limite em segundos
+  tempoNivel2           Int       @default(45)
+  tempoNivel3           Int       @default(60)
+  tempoNivel4           Int       @default(90)
+
   faixaMinNivel1        Int       @default(0)
   faixaMaxNivel1        Int       @default(255)
 
@@ -80,6 +85,7 @@ model Resposta {
   questaoId       Int
   resposta        String
   correta         Boolean
+  resultado       Int      @default(0) // -1 erro, 0 pulado/tempo esgotado, 1 acerto
   pontosGanhos    Int
   respondidaEmMs  BigInt
 

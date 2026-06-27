@@ -3,16 +3,17 @@ import { QuestaoService } from '../../../../services/questao.service';
 
 export async function POST(request: Request) {
   try {
-    const { alunoId, questaoId, resposta } = await request.json();
+    const { alunoId, questaoId, resposta, resultado } = await request.json();
 
-    if (!alunoId || !questaoId || resposta === undefined) {
+    if (!alunoId || !questaoId || (resposta === undefined && resultado === undefined)) {
       return NextResponse.json({ error: 'Dados incompletos' }, { status: 400 });
     }
 
-    const resultado = await QuestaoService.responderQuestao(
+    const resultadoFinal = await QuestaoService.responderQuestao(
       Number(alunoId),
       Number(questaoId),
-      resposta
+      resposta || "",
+      resultado !== undefined ? Number(resultado) : undefined
     );
 
     return NextResponse.json(resultado);
