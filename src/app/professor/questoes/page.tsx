@@ -16,8 +16,8 @@ interface Questao {
 const mapNivelParaTipos: Record<number, string[]> = {
   1: ['BINARIO_DECIMAL', 'DECIMAL_BINARIO'],
   2: ['BINARIO_ASCII', 'ASCII_BINARIO'],
-  3: ['BINARIO_PALAVRA'],
-  4: ['DECIMAL_PALAVRA'],
+  3: ['DECIMAL_PALAVRA'],
+  4: ['BINARIO_PALAVRA'],
 };
 
 const instructions: Record<string, { enunciado: string; resposta: string; exemplo: string }> = {
@@ -375,8 +375,8 @@ export default function QuestoesPagina() {
                 >
                   <option value={1}>Nível 1 (Binário / Decimal)</option>
                   <option value={2}>Nível 2 (ASCII / Binário)</option>
-                  <option value={3}>Nível 3 (Palavra / Binário)</option>
-                  <option value={4}>Nível 4 (Palavra / Decimal)</option>
+                  <option value={3}>Nível 3 (Palavra / Decimal)</option>
+                  <option value={4}>Nível 4 (Palavra / Binário)</option>
                 </select>
               </div>
 

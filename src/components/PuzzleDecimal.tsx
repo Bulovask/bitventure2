@@ -35,8 +35,8 @@ export default function PuzzleDecimal({
 
   const bitsGerados = useMemo(() => {
     
-    return questaoEnunciado.padStart(8, "0").split("").map(Number);    
-    // return numeroObjetivo.toString(2).padStart(8, "0").split("").map(Number);
+    // return questaoEnunciado.padStart(8, "0").split("").map(Number);    
+    return numeroObjetivo.toString(2).padStart(8, "0").split("").map(Number);
   }, [numeroObjetivo, questaoTipo, questaoEnunciado]);
 
   const finalizarRef = useRef(finalizarFase);
