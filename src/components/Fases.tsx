@@ -3,16 +3,25 @@
 import { useJogoStore } from "../store/useGameStore";
 import { useCallback, useState, useEffect } from "react";
 import { TerminalHeader } from "./UI";
-import PuzzleBinario from "./PuzzleBinario";
 import PuzzleDecimal from "./PuzzleDecimal";
 import PuzzlePotencias from "./PuzzlePotencias";
 import PuzzleASCII from "./PuzzleASCII";
 import PuzzleReverseASCII from "./PuzzleReverseASCII";
 import ASCIITable, { ButtonASCIITableModal } from "./ASCIITable";
 
+interface Questao {
+  id: number;
+  nivel: number;
+  tipo: string;
+  enunciado: string;
+  respostaCorreta: string;
+  ativo: boolean;
+  origem: string;
+}
+
 export default function Fases() {
   const [modalAberto, setModalAberto] = useState(false);
-  const [questaoAtual, setQuestaoAtual] = useState<any>(null);
+  const [questaoAtual, setQuestaoAtual] = useState<Questao | null>(null);
   const [loading, setLoading] = useState(true);
   
   const { nome: nomeAluno, faseAtual, registrarFase, setTela } = useJogoStore();
@@ -37,6 +46,7 @@ export default function Fases() {
   }, [setTela]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     buscarQuestao();
   }, [buscarQuestao]);
 
@@ -84,13 +94,32 @@ export default function Fases() {
             questaoEnunciado={questaoAtual.enunciado}
             {...props} />;
       case 'DECIMAL_BINARIO':
-        return <PuzzleBinario 
+        return <PuzzlePotencias 
             numeroObjetivo={parseInt(questaoAtual.enunciado)} 
             {...props} />;
-      
-      
+      case 'BINARIO_ASCII':
+        return <PuzzleASCII 
+            letraObjetivo={questaoAtual.respostaCorreta} 
+            {...props} />;
+      case 'ASCII_BINARIO':
+        return <PuzzleReverseASCII 
+            letraObjetivo={questaoAtual.enunciado} 
+            {...props}
+            onAcerto={(pts: number, tempo: number, err: number, resposta: string) => {
+              // Converte o caractere retornado pelo componente para a representação binária esperada pelo backend
+              let respostaFinal = resposta;
+              if (resposta && resposta !== '?') {
+                const charCode = resposta.charCodeAt(0);
+                respostaFinal = charCode.toString(2).padStart(8, '0');
+              }
+              handleAcerto(pts, tempo, err, respostaFinal);
+            }} />;
       default:
-        return <div>Tipo de questão não suportado: {questaoAtual.tipo}</div>;
+        return (
+          <div className="p-6 border-2 border-red-900 bg-red-900/20 text-red-500 rounded-lg">
+            [ERRO] Tipo de questão não suportado: {questaoAtual.tipo}
+          </div>
+        );
     }
   };
 
