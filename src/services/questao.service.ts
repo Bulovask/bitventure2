@@ -221,4 +221,53 @@ export const QuestaoService = {
       ativo: true,
     };
   },
+
+  async gerarSugestao(nivel: number, tipo: string) {
+    const config = await ConfiguracaoRepository.get();
+    
+    if (nivel === 1) {
+      const min = config?.faixaMinNivel1 ?? 0;
+      const max = config?.faixaMaxNivel1 ?? 255;
+      const decimal = Math.floor(Math.random() * (max - min + 1)) + min;
+      const binario = decimal.toString(2).padStart(8, '0');
+      
+      if (tipo === 'BINARIO_DECIMAL') {
+        return { enunciado: binario, respostaCorreta: decimal.toString() };
+      } else {
+        return { enunciado: decimal.toString(), respostaCorreta: binario };
+      }
+    } else if (nivel === 2) {
+      const charCode = Math.floor(Math.random() * (90 - 65 + 1)) + 65; // A-Z
+      const char = String.fromCharCode(charCode);
+      const binario = charCode.toString(2).padStart(8, '0');
+      
+      if (tipo === 'BINARIO_ASCII') {
+        return { enunciado: binario, respostaCorreta: char };
+      } else {
+        return { enunciado: char, respostaCorreta: binario };
+      }
+    } else if (nivel === 3) {
+      const tamanho = Math.floor(Math.random() * ((config?.tamanhoMaxPalavra ?? 5) - (config?.tamanhoMinPalavra ?? 3) + 1)) + (config?.tamanhoMinPalavra ?? 3);
+      let palavra = '';
+      let binarios = [];
+      for (let i = 0; i < tamanho; i++) {
+        const charCode = Math.floor(Math.random() * (90 - 65 + 1)) + 65;
+        palavra += String.fromCharCode(charCode);
+        binarios.push(charCode.toString(2).padStart(8, '0'));
+      }
+      return { enunciado: binarios.join(' '), respostaCorreta: palavra };
+    } else if (nivel === 4) {
+      const tamanho = Math.floor(Math.random() * ((config?.tamanhoMaxPalavra ?? 5) - (config?.tamanhoMinPalavra ?? 3) + 1)) + (config?.tamanhoMinPalavra ?? 3);
+      let palavra = '';
+      let decimais = [];
+      for (let i = 0; i < tamanho; i++) {
+        const charCode = Math.floor(Math.random() * (90 - 65 + 1)) + 65;
+        palavra += String.fromCharCode(charCode);
+        decimais.push(charCode.toString());
+      }
+      return { enunciado: decimais.join(' '), respostaCorreta: palavra };
+    }
+    
+    throw new Error('Nível ou tipo inválido para geração');
+  },
 };
