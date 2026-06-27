@@ -24,6 +24,7 @@ export async function GET(request: Request) {
         nivel: questao.nivel,
         tipo: questao.tipo,
         enunciado: questao.enunciado,
+        respostaCorreta: questao.respostaCorreta,
       },
       concluido: false,
     });

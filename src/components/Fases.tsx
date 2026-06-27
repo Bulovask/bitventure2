@@ -7,6 +7,7 @@ import PuzzleDecimal from "./PuzzleDecimal";
 import PuzzlePotencias from "./PuzzlePotencias";
 import PuzzleASCII from "./PuzzleASCII";
 import PuzzleReverseASCII from "./PuzzleReverseASCII";
+import PuzzlePalavra from "./PuzzlePalavra";
 import ASCIITable, { ButtonASCIITableModal } from "./ASCIITable";
 
 interface Questao {
@@ -114,6 +115,13 @@ export default function Fases() {
               }
               handleAcerto(pts, tempo, err, respostaFinal);
             }} />;
+      case 'BINARIO_PALAVRA':
+      case 'DECIMAL_PALAVRA':
+        return <PuzzlePalavra 
+            enunciado={questaoAtual.enunciado}
+            respostaCorreta={questaoAtual.respostaCorreta}
+            tipo={questaoAtual.tipo as 'BINARIO_PALAVRA' | 'DECIMAL_PALAVRA'}
+            {...props} />;
       default:
         return (
           <div className="p-6 border-2 border-red-900 bg-red-900/20 text-red-500 rounded-lg">
