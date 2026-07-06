@@ -42,6 +42,25 @@ O **Bitventure 2** é uma aplicação web de avaliação gamificada sobre sistem
 * Um cronômetro regressivo de **120.000 milissegundos (2 minutos)** é iniciado na tela do aluno para finalização da resposta.
 * Após o tempo esgotado, o sistema bloqueia novas submissões daquela partida.
 * **RF08 – Exportação de Dados:** O painel deve permitir exportar a tabela de notas e logs dos alunos nos formatos **JSON** e **CSV**.
+  * **Caminho da API:** `GET /api/professor/export`
+  * **Parâmetros da Query:**
+    * `format` (obrigatório): `json` ou `csv`.
+    * `since` (opcional): Timestamp ISO (ex: `2026-07-01T00:00:00Z`) para filtrar registros a partir desta data.
+    * `alunoId` (opcional): ID do aluno para filtrar registros de um estudante específico.
+    * `nivel` (opcional): Nível da questão (1, 2, 3 ou 4).
+    * `limit` / `offset` (opcionais): Paginação dos registros (aplicável apenas para o formato JSON).
+  * **Segurança Mínima:** A rota é permitida para acessos na mesma máquina do servidor (`localhost` / `127.0.0.1` / `::1`) ou remotos na rede local (LAN) desde que contenham o cabeçalho `x-professor-token` com o valor `pibid-offline-token`.
+  * **Exemplos de Uso (cURL):**
+    * *Exportação em JSON com filtro de data:*
+      ```bash
+      curl -G "http://localhost:3000/api/professor/export" --data-urlencode "format=json" --data-urlencode "since=2026-07-01T00:00:00Z"
+      ```
+    * *Exportação em CSV com filtro de nível (salvando em arquivo):*
+      ```bash
+      curl -G -o export.csv "http://localhost:3000/api/professor/export" --data-urlencode "format=csv" --data-urlencode "nivel=2"
+      ```
+  * **Desempenho e Recomendações:** A exportação de CSV é gerada via *Streaming* com paginação em lotes de 100 registros direto no banco para evitar alocação de todo o conteúdo em memória. Para turmas extremamente numerosas (> 200 alunos ou com histórico acumulado longo), recomenda-se o uso de filtros de data (`since`) ou, para extensões futuras, considerar um job assíncrono que comprima os arquivos em ZIP.
+
 
 ### 3.3. Módulo de Exibição (Painel de Ranking - Rota Pública/Projetor)
 
