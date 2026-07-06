@@ -9,6 +9,7 @@ import PuzzleASCII from "./PuzzleASCII";
 import PuzzleReverseASCII from "./PuzzleReverseASCII";
 import PuzzlePalavra from "./PuzzlePalavra";
 import ASCIITable, { ButtonASCIITableModal } from "./ASCIITable";
+import SomaCalculator, { ButtonSomaCalculatorModal } from "./SomaCalculator";
 
 interface Questao {
   id: number;
@@ -22,6 +23,7 @@ interface Questao {
 
 export default function Fases() {
   const [modalAberto, setModalAberto] = useState(false);
+  const [calcAberto, setCalcAberto] = useState(false);
   const [questaoAtual, setQuestaoAtual] = useState<Questao | null>(null);
   const [loading, setLoading] = useState(true);
   const [startTime, setStartTime] = useState<number>(0);
@@ -279,10 +281,12 @@ export default function Fases() {
         </p>
       </div>
 
-      <div className="fixed bottom-4 right-4">
+      <div className="fixed bottom-4 right-4 flex flex-col gap-2 items-end z-40">
         <ButtonASCIITableModal onClick={() => setModalAberto(true)} />
+        <ButtonSomaCalculatorModal onClick={() => setCalcAberto(true)} />
       </div>
       <ASCIITable isOpen={modalAberto} onClose={() => setModalAberto(false)} />
+      <SomaCalculator isOpen={calcAberto} onClose={() => setCalcAberto(false)} />
     </div>
   );
 }
