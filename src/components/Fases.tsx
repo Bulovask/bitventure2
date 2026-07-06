@@ -29,18 +29,50 @@ export default function Fases() {
   const [tempoRestante, setTempoRestante] = useState<number | null>(null);
   
   const { nome: nomeAluno, faseAtual, registrarFase, setTela } = useJogoStore();
+  const [finalizando, setFinalizando] = useState(false);
+
+  const finalizarAluno = useCallback(async () => {
+    if (finalizando) return;
+    setFinalizando(true);
+
+    try {
+      const alunoData = JSON.parse(localStorage.getItem('bitventure_aluno') || '{}');
+      if (!alunoData?.id) return;
+
+      const res = await fetch('/api/aluno/finalizar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ alunoId: Number(alunoData.id) }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error('Erro ao finalizar aluno:', errorData.error || res.statusText);
+        return;
+      }
+
+      const data = await res.json();
+      localStorage.setItem('bitventure_aluno', JSON.stringify({ ...alunoData, tempoConclusaoMs: data.tempoConclusaoMs }));
+    } catch (err) {
+      console.error('Erro ao finalizar aluno', err);
+    }
+  }, [finalizando]);
 
   const buscarQuestao = useCallback(async () => {
     setLoading(true);
     try {
       const alunoData = JSON.parse(localStorage.getItem('bitventure_aluno') || '{}');
+      if (!alunoData?.id) {
+        console.error('Aluno não encontrado no localStorage.');
+        return;
+      }
+
       const res = await fetch(`/api/questoes/proxima?alunoId=${alunoData.id}`);
       const data = await res.json();
       
-      if (data.partidaEncerrada) {
-        setTela("resultados");
-      } else if (data.concluido) {
-        setTela("resultados");
+      if (data.partidaEncerrada || data.concluido) {
+        await finalizarAluno();
+        setTela('resultados');
       } else {
         setQuestaoAtual(data.questao);
         setTempoLimiteTotal(data.tempoLimiteSegundos || 30);
@@ -50,7 +82,7 @@ export default function Fases() {
     } finally {
       setLoading(false);
     }
-  }, [setTela]);
+  }, [setTela, finalizarAluno]);
 
   useEffect(() => {
     buscarQuestao();
@@ -134,8 +166,8 @@ export default function Fases() {
         })
       });
 
-      // Registra na Store: erro vale -1, acerto vale 1
-      registrarFase(resultado, tempoMs, resultado);
+      // Registra na Store: utiliza basePontos para refletir a pontuação real da fase
+      registrarFase(basePontos, tempoMs, resultado);
       
       // Busca a próxima
       buscarQuestao();
@@ -235,7 +267,7 @@ export default function Fases() {
           [ PULAR_QUESTÃO ]
         </button>
         <p className="text-[9px] text-green-700 uppercase tracking-wider hidden sm:block">
-          // o pulo registrará 0 pontos e avançará à próxima fase
+          o pulo registrará 0 pontos e avançará à próxima fase
         </p>
       </div>
 

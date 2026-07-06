@@ -154,7 +154,7 @@ export default function ConfigPagina() {
               {/* Nível 3 */}
               <div className="p-4 bg-gray-850 rounded border border-gray-750 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2 text-xs font-bold text-green-400 font-mono">
-                  [ NÍVEL 3 - DECODIFICAÇÃO DE PALAVRAS BINÁRIAS ]
+                  [ NÍVEL 3 -  DECODIFICAÇÃO DE PALAVRAS DECIMAIS ]
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-300 mb-1">Qtd Questões</label>
@@ -183,7 +183,7 @@ export default function ConfigPagina() {
               {/* Nível 4 */}
               <div className="p-4 bg-gray-850 rounded border border-gray-750 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2 text-xs font-bold text-green-400 font-mono">
-                  [ NÍVEL 4 - DECODIFICAÇÃO DE PALAVRAS DECIMAIS ]
+                  [ NÍVEL 4 - DECODIFICAÇÃO DE PALAVRAS BINÁRIAS ]
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-300 mb-1">Qtd Questões</label>
