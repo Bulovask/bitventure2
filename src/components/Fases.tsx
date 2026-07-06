@@ -108,7 +108,8 @@ export default function Fases() {
           alunoId: alunoData.id,
           questaoId: questaoAtual.id,
           resposta: respostaTexto,
-          resultado: 0 // erro: -1, pular/esgotado: 0, acerto: 1
+          resultado: 0,
+          pontosGanhos: 0
         })
       });
     } catch (err) {
@@ -155,19 +156,26 @@ export default function Fases() {
       const alunoData = JSON.parse(localStorage.getItem('bitventure_aluno') || '{}');
       const resultado = erros >= 3 ? -1 : 1;
 
-      await fetch('/api/questoes/responder', {
+      const pontosGanhosParaPersistir = resultado === 1 ? basePontos : 0;
+
+      const response = await fetch('/api/questoes/responder', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           alunoId: alunoData.id,
           questaoId: questaoAtual.id,
           resposta: respostaAluno,
-          resultado: resultado
+          resultado,
+          pontosGanhos: pontosGanhosParaPersistir
         })
       });
 
-      // Registra na Store: utiliza basePontos para refletir a pontuação real da fase
-      registrarFase(basePontos, tempoMs, resultado);
+      const data = await response.json();
+      const pontosGanhos = typeof data?.pontosGanhos === 'number' ? data.pontosGanhos : pontosGanhosParaPersistir;
+      const resultadoFinal = typeof data?.resultado === 'number' ? data.resultado : resultado;
+
+      // Registra na Store com o mesmo valor persistido no backend
+      registrarFase(pontosGanhos, tempoMs, resultadoFinal);
       
       // Busca a próxima
       buscarQuestao();

@@ -34,7 +34,7 @@ export const QuestaoService = {
     return sorteada;
   },
 
-  async responderQuestao(alunoId: number, questaoId: number, resposta: string, resultado?: number) {
+  async responderQuestao(alunoId: number, questaoId: number, resposta: string, resultado?: number, pontosGanhosRecebidos?: number) {
     const questao = await prisma.questao.findUnique({ where: { id: questaoId } });
     if (!questao) throw new Error('Questão não encontrada');
 
@@ -45,7 +45,7 @@ export const QuestaoService = {
     }
 
     const correta = finalResultado === 1;
-    const pontosGanhos = finalResultado; // -1 erro, 0 pulado/tempo esgotado, 1 acerto
+    const pontosGanhos = pontosGanhosRecebidos ?? finalResultado;
 
     // Registrar a resposta
     await RespostaRepository.create({
@@ -57,7 +57,7 @@ export const QuestaoService = {
       pontosGanhos,
     });
 
-    // Atualizar pontuação do aluno (pode decrementar se for -1, ou somar se for 1)
+    // Atualizar pontuação do aluno com o valor real calculado para esta resposta
     await AlunoRepository.updatePontuacao(alunoId, pontosGanhos);
 
     return { correta, pontosGanhos, resultado: finalResultado };
