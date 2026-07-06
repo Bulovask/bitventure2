@@ -70,10 +70,10 @@ export default function PuzzleBinario({ numeroObjetivo, onAcerto, pontos }: Puzz
     <div
       className={`flex flex-col items-center gap-8 p-6 transition-all duration-300 border-2 rounded-lg relative w-full ${
         sucesso
-          ? "bg-green-500/10 border-green-400 shadow-[0_0_30px_rgba(34,197,94,0.2)]"
+          ? "bg-green-50 border-green-600 shadow-[0_0_30px_rgba(34,197,94,0.15)]"
           : erroCritico
-          ? "bg-red-900/20 border-red-600 animate-shake"
-          : "bg-zinc-900/30 border-green-900"
+          ? "bg-red-50 border-red-500 animate-shake"
+          : "bg-white border-green-300"
       }`}
     >
       {/* Contador de Vidas (Erros) */}
@@ -82,7 +82,7 @@ export default function PuzzleBinario({ numeroObjetivo, onAcerto, pontos }: Puzz
           <div 
             key={i} 
             className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-              i < erros ? 'bg-red-600 shadow-[0_0_8px_red]' : 'bg-green-900/40'
+              i < erros ? 'bg-red-500' : 'bg-green-200'
             }`} 
           />
         ))}
@@ -90,28 +90,28 @@ export default function PuzzleBinario({ numeroObjetivo, onAcerto, pontos }: Puzz
 
       <div className="text-center space-y-2">
         <p className={`text-xs uppercase tracking-[0.2em] font-bold transition-colors ${
-          sucesso ? "text-green-400" : erroCritico ? "text-red-500" : "text-green-700"
+          sucesso ? "text-green-700" : erroCritico ? "text-red-650" : "text-green-800"
         }`}>
           {sucesso ? "[ STATUS: DECODIFICADO ]" : erroCritico ? "[ ALERTA: SOBRECARGA ]" : "Objetivo_Decimal"}
         </p>
         <h2 className={`text-6xl font-black transition-all duration-300 ${
-          sucesso ? "text-green-400 scale-105" : erroCritico ? "text-red-500" : "text-white"
+          sucesso ? "text-green-700 scale-105" : erroCritico ? "text-red-600" : "text-zinc-950"
         }`}>
           {numeroObjetivo}
         </h2>
       </div>
 
       <div className={`w-full p-4 border-y transition-all duration-300 min-h-16 flex items-center justify-center font-mono ${
-        sucesso ? "bg-green-500/20 border-green-400" : erroCritico ? "bg-red-900/30 border-red-600" : "bg-black/50 border-green-900/50"
+        sucesso ? "bg-green-50 border-green-300" : erroCritico ? "bg-red-50 border-red-200" : "bg-zinc-50 border-green-200"
       }`}>
-        <p className={`text-xl transition-colors ${sucesso ? "text-white" : erroCritico ? "text-red-400" : "text-green-400"}`}>
+        <p className={`text-xl transition-colors ${sucesso ? "text-zinc-900 font-bold" : erroCritico ? "text-red-700" : "text-green-700"}`}>
           {parcelasAtivas.length > 0 ? (
             <>
               {parcelasAtivas.join(" + ")} ={" "}
               <span className="font-bold underline">{somaAtual}</span>
             </>
           ) : (
-            <span className="text-green-900 opacity-50">000 + 000 = 0</span>
+            <span className="text-zinc-450 opacity-50">000 + 000 = 0</span>
           )}
         </p>
       </div>
@@ -120,18 +120,18 @@ export default function PuzzleBinario({ numeroObjetivo, onAcerto, pontos }: Puzz
         {bits.map((bit, i) => (
           <div key={i} className="flex flex-col items-center gap-2">
             <span className={`text-[10px] font-bold transition-colors ${
-              sucesso ? "text-green-400" : erroCritico ? "text-red-800" : "text-green-800"
+              sucesso ? "text-green-700" : erroCritico ? "text-red-750" : "text-green-850"
             }`}>
               {valores[i]}
             </span>
             <button
               onClick={() => toggleBit(i)}
               disabled={sucesso || erroCritico}
-              className={`w-12 h-16 md:w-14 md:h-20 flex items-center justify-center text-2xl font-black transition-all duration-200 border-2 ${
+              className={`w-12 h-16 md:w-14 md:h-20 flex items-center justify-center text-2xl font-black transition-all duration-200 border-2 cursor-pointer ${
                 bit === 1
-                  ? "bg-green-500 border-white text-black shadow-[0_0_15px_rgba(34,197,94,0.5)]"
-                  : "bg-zinc-950 border-green-900 text-green-900 hover:border-green-500"
-              } ${erroCritico && bit === 1 ? "border-red-500 text-red-500" : ""}`}
+                  ? "bg-green-600 border-green-600 text-white shadow-[0_0_15px_rgba(34,197,94,0.15)]"
+                  : "bg-zinc-50 border-green-300 text-green-750 hover:border-green-600"
+              } ${erroCritico && bit === 1 ? "border-red-500 text-red-650 bg-red-50" : ""}`}
             >
               {bit}
             </button>
@@ -140,7 +140,7 @@ export default function PuzzleBinario({ numeroObjetivo, onAcerto, pontos }: Puzz
       </div>
 
       <div className={`text-[10px] uppercase font-medium tracking-tight transition-colors ${
-        erroCritico ? "text-red-500 animate-pulse" : "text-green-900"
+        erroCritico ? "text-red-600 animate-pulse" : "text-green-800"
       }`}>
         {sucesso
           ? "Aguardando sincronização de dados..."

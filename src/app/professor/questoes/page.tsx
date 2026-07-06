@@ -331,10 +331,10 @@ export default function QuestoesPagina() {
   const currentInstructions = instructions[formData.tipo] || { enunciado: '', resposta: '', exemplo: '' };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-          <h1 className="text-3xl font-bold text-yellow-400">Gestão de Questões</h1>
+          <h1 className="text-3xl font-bold text-yellow-750">Gestão de Questões</h1>
           <div className="space-x-4 flex items-center">
             <button
               onClick={() => {
@@ -343,18 +343,18 @@ export default function QuestoesPagina() {
                 setSugestaoGerada(false);
                 setShowForm(true);
               }}
-              className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded font-bold transition-colors cursor-pointer"
+              className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded font-bold text-white transition-colors cursor-pointer"
             >
               + Nova Questão
             </button>
-            <Link href="/professor" className="text-blue-400 hover:underline">Voltar</Link>
+            <Link href="/professor" className="text-blue-650 hover:underline">Voltar</Link>
           </div>
         </div>
 
         {showForm && (
-          <div className="mb-12 bg-gray-800 p-8 rounded-lg border border-gray-700 shadow-xl animate-in fade-in duration-300">
-            <div className="flex justify-between items-center mb-6 border-b border-gray-700 pb-3">
-              <h2 className="text-2xl font-bold text-blue-400">{editando ? 'Editar Questão' : 'Nova Questão'}</h2>
+          <div className="mb-12 bg-white p-8 rounded-lg border border-zinc-200 shadow-md animate-in fade-in duration-300">
+            <div className="flex justify-between items-center mb-6 border-b border-zinc-200 pb-3">
+              <h2 className="text-2xl font-bold text-blue-700">{editando ? 'Editar Questão' : 'Nova Questão'}</h2>
               <button 
                 type="button" 
                 onClick={handleGerarSugestao}
@@ -371,7 +371,7 @@ export default function QuestoesPagina() {
                 <select
                   value={formData.nivel}
                   onChange={(e) => handleNivelChange(parseInt(e.target.value))}
-                  className="w-full bg-gray-700 border border-gray-600 rounded p-2 outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full bg-zinc-50 border border-zinc-300 rounded p-2 outline-none focus:ring-2 focus:ring-blue-500 text-zinc-900"
                 >
                   <option value={1}>Nível 1 (Binário / Decimal)</option>
                   <option value={2}>Nível 2 (ASCII / Binário)</option>
@@ -385,7 +385,7 @@ export default function QuestoesPagina() {
                 <select
                   value={formData.tipo}
                   onChange={(e) => handleTipoChange(e.target.value)}
-                  className="w-full bg-gray-700 border border-gray-600 rounded p-2 outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                  className="w-full bg-zinc-50 border border-zinc-300 rounded p-2 outline-none focus:ring-2 focus:ring-blue-500 font-mono text-zinc-900"
                 >
                   {(mapNivelParaTipos[formData.nivel] || []).map(t => (
                     <option key={t} value={t}>{t}</option>
@@ -394,22 +394,22 @@ export default function QuestoesPagina() {
               </div>
 
               {/* Box de Instruções baseada no Tipo */}
-              <div className="md:col-span-2 bg-blue-950/20 border border-blue-900/40 p-4 rounded text-xs text-blue-300 font-mono">
-                <p className="font-bold text-blue-400 mb-1">📋 GUIA DE FORMATO DO TIPO SELECIONADO:</p>
+              <div className="md:col-span-2 bg-blue-50 border border-blue-200 p-4 rounded text-xs text-blue-800 font-mono">
+                <p className="font-bold text-blue-750 mb-1">📋 GUIA DE FORMATO DO TIPO SELECIONADO:</p>
                 <ul className="list-disc pl-5 space-y-1">
                   <li><strong>Enunciado:</strong> {currentInstructions.enunciado}</li>
                   <li><strong>Resposta:</strong> {currentInstructions.resposta}</li>
-                  <li><strong>Exemplo Prático:</strong> <code className="text-yellow-400 font-bold bg-zinc-950 px-1.5 py-0.5 rounded">{currentInstructions.exemplo}</code></li>
+                  <li><strong>Exemplo Prático:</strong> <code className="text-yellow-750 font-bold bg-zinc-100 px-1.5 py-0.5 rounded">{currentInstructions.exemplo}</code></li>
                 </ul>
               </div>
 
               {sugestaoGerada && (
-                <div className="md:col-span-2 bg-purple-950/20 border border-purple-900/40 p-3 rounded flex justify-between items-center text-xs text-purple-300 font-mono">
+                <div className="md:col-span-2 bg-purple-50 border border-purple-200 p-3 rounded flex justify-between items-center text-xs text-purple-800 font-mono">
                   <span>💡 Sugestão automática carregada nos campos! Você pode editar, salvar ou descartar.</span>
                   <button 
                     type="button" 
                     onClick={handleDescartarSugestao}
-                    className="text-red-400 hover:text-red-300 font-bold hover:underline cursor-pointer"
+                    className="text-red-650 hover:text-red-700 font-bold hover:underline cursor-pointer"
                   >
                     Descartar Sugestão
                   </button>
@@ -419,12 +419,12 @@ export default function QuestoesPagina() {
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium mb-2">
                   Enunciado 
-                  <span className="text-[10px] text-gray-400 ml-2 font-normal">(Sincroniza Resposta automaticamente)</span>
+                  <span className="text-[10px] text-zinc-500 ml-2 font-normal">(Sincroniza Resposta automaticamente)</span>
                 </label>
                 <textarea
                   value={formData.enunciado}
                   onChange={(e) => handleEnunciadoChange(e.target.value)}
-                  className="w-full bg-gray-700 border border-gray-600 rounded p-2 h-24 outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                  className="w-full bg-zinc-50 border border-zinc-300 rounded p-2 h-24 outline-none focus:ring-2 focus:ring-blue-500 font-mono text-zinc-900"
                   placeholder="Insira o enunciado da questão..."
                   required
                 />
@@ -433,13 +433,13 @@ export default function QuestoesPagina() {
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium mb-2">
                   Resposta Correta
-                  <span className="text-[10px] text-gray-400 ml-2 font-normal">(Sincroniza Enunciado automaticamente)</span>
+                  <span className="text-[10px] text-zinc-500 ml-2 font-normal">(Sincroniza Enunciado automaticamente)</span>
                 </label>
                 <input
                   type="text"
                   value={formData.respostaCorreta}
                   onChange={(e) => handleRespostaChange(e.target.value)}
-                  className="w-full bg-gray-700 border border-gray-600 rounded p-2 outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                  className="w-full bg-zinc-50 border border-zinc-300 rounded p-2 outline-none focus:ring-2 focus:ring-blue-500 font-mono text-zinc-900"
                   placeholder="Insira a resposta correta esperada..."
                   required
                 />
@@ -451,25 +451,25 @@ export default function QuestoesPagina() {
                   id="ativo"
                   checked={formData.ativo}
                   onChange={(e) => setFormData({ ...formData, ativo: e.target.checked })}
-                  className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-blue-600 bg-zinc-50 border-zinc-350 rounded focus:ring-blue-500"
                 />
                 <label htmlFor="ativo" className="text-sm font-medium">Questão Ativa no Jogo</label>
               </div>
 
-              <div className="md:col-span-2 flex justify-end space-x-4 mt-4 border-t border-gray-750 pt-4">
+              <div className="md:col-span-2 flex justify-end space-x-4 mt-4 border-t border-zinc-200 pt-4">
                 <button
                   type="button"
                   onClick={() => {
                     setShowForm(false);
                     setSugestaoGerada(false);
                   }}
-                  className="bg-gray-600 hover:bg-gray-500 px-6 py-2 rounded transition-colors cursor-pointer"
+                  className="bg-zinc-200 hover:bg-zinc-300 px-6 py-2 rounded text-zinc-800 transition-colors cursor-pointer"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 px-8 py-2 rounded font-bold transition-colors cursor-pointer"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded font-bold transition-colors cursor-pointer"
                 >
                   {editando ? 'Salvar Alterações' : 'Criar Questão'}
                 </button>
@@ -478,13 +478,13 @@ export default function QuestoesPagina() {
           </div>
         )}
 
-        <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden shadow-xl">
-          <div className="p-4 bg-gray-750 border-b border-gray-750">
-            <h3 className="font-bold text-gray-300">Questões Cadastradas ({questoes.length})</h3>
+        <div className="bg-white rounded-lg border border-zinc-200 overflow-hidden shadow-md">
+          <div className="p-4 bg-zinc-50 border-b border-zinc-200">
+            <h3 className="font-bold text-zinc-800">Questões Cadastradas ({questoes.length})</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left">
-              <thead className="bg-gray-700 text-gray-300 uppercase text-xs">
+              <thead className="bg-zinc-100 text-zinc-650 uppercase text-xs">
                 <tr>
                   <th className="px-6 py-4">ID</th>
                   <th className="px-6 py-4">Nível</th>
@@ -495,21 +495,21 @@ export default function QuestoesPagina() {
                   <th className="px-6 py-4 text-right">Ações</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-700">
+              <tbody className="divide-y divide-zinc-200">
                 {questoes.map((q) => (
-                  <tr key={q.id} className="hover:bg-gray-750 transition-colors">
-                    <td className="px-6 py-4 text-gray-400">#{q.id}</td>
+                  <tr key={q.id} className="hover:bg-zinc-50 transition-colors">
+                    <td className="px-6 py-4 text-zinc-500">#{q.id}</td>
                     <td className="px-6 py-4">
-                      <span className="bg-blue-900 text-blue-200 text-xs px-2 py-1 rounded">Lvl {q.nivel}</span>
+                      <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Lvl {q.nivel}</span>
                     </td>
                     <td className="px-6 py-4 text-xs font-mono">{q.tipo}</td>
                     <td className="px-6 py-4 truncate max-w-xs">{q.enunciado}</td>
-                    <td className="px-6 py-4 text-green-400 font-bold font-mono">{q.respostaCorreta}</td>
+                    <td className="px-6 py-4 text-green-700 font-bold font-mono">{q.respostaCorreta}</td>
                     <td className="px-6 py-4">
                       <button
                         onClick={() => handleToggleAtivo(q)}
                         className={`px-3 py-1 rounded-full text-xs font-bold cursor-pointer transition-all ${
-                          q.ativo ? 'bg-green-900 text-green-300 hover:bg-green-850' : 'bg-red-900 text-red-300 hover:bg-red-850'
+                          q.ativo ? 'bg-green-100 text-green-800 hover:bg-green-200' : 'bg-red-100 text-red-800 hover:bg-red-200'
                         }`}
                       >
                         {q.ativo ? 'Ativa' : 'Inativa'}
@@ -518,13 +518,13 @@ export default function QuestoesPagina() {
                     <td className="px-6 py-4 text-right space-x-3 text-sm">
                       <button
                         onClick={() => handleEdit(q)}
-                        className="text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
+                        className="text-blue-600 hover:text-blue-750 transition-colors cursor-pointer"
                       >
                         Editar
                       </button>
                       <button
                         onClick={() => handleDelete(q.id)}
-                        className="text-red-400 hover:text-red-300 transition-colors cursor-pointer"
+                        className="text-red-650 hover:text-red-750 transition-colors cursor-pointer"
                       >
                         Excluir
                       </button>
@@ -533,7 +533,7 @@ export default function QuestoesPagina() {
                 ))}
                 {questoes.length === 0 && !loading && (
                   <tr>
-                    <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
+                    <td colSpan={7} className="px-6 py-8 text-center text-zinc-400">
                       Nenhuma questão cadastrada no banco.
                     </td>
                   </tr>

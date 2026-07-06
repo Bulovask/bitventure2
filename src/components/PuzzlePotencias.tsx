@@ -72,10 +72,10 @@ export default function PuzzlePotencias({ numeroObjetivo, onAcerto, pontos }: Pr
     <div
       className={`flex flex-col items-center gap-6 p-6 border-2 transition-all duration-300 rounded-lg w-full ${
         sucesso
-          ? "border-green-400 bg-green-500/10 shadow-[0_0_20px_rgba(34,197,94,0.2)]"
+          ? "border-green-600 bg-green-50 shadow-[0_0_20px_rgba(34,197,94,0.15)]"
           : erroCritico
-            ? "border-red-600 bg-red-900/20 animate-shake" // Adicione essa animação no seu CSS/Tailwind
-            : "border-green-900 bg-zinc-900/30"
+            ? "border-red-500 bg-red-50 animate-shake" // Adicione essa animação no seu CSS/Tailwind
+            : "border-green-300 bg-white"
       }`}
     >
       <div className="text-center space-y-1 w-full relative">
@@ -84,12 +84,12 @@ export default function PuzzlePotencias({ numeroObjetivo, onAcerto, pontos }: Pr
           {[...Array(3)].map((_, i) => (
             <div
               key={i}
-              className={`w-2 h-2 rounded-full ${i < erros ? "bg-red-600 shadow-[0_0_5px_red]" : "bg-green-900"}`}
+              className={`w-2 h-2 rounded-full ${i < erros ? "bg-red-500" : "bg-green-200"}`}
             />
           ))}
         </div>
 
-        <p className="text-[10px] uppercase tracking-widest text-green-700 font-bold">
+        <p className="text-[10px] uppercase tracking-widest text-green-800 font-bold">
           {erroCritico
             ? "[ ALERTA: SOBRECARGA_DETECTADA ]"
             : "[ MODO: ARQUITETURA_DE_BASE ]"}
@@ -97,10 +97,10 @@ export default function PuzzlePotencias({ numeroObjetivo, onAcerto, pontos }: Pr
         <h2
           className={`text-4xl font-black transition-colors ${
             sucesso
-              ? "text-green-400"
+              ? "text-green-700"
               : erroCritico
-                ? "text-red-500"
-                : "text-white"
+                ? "text-red-650"
+                : "text-zinc-950"
           }`}
         >
           OBJETIVO: {numeroObjetivo}
@@ -111,7 +111,7 @@ export default function PuzzlePotencias({ numeroObjetivo, onAcerto, pontos }: Pr
         {pesos.map((p, i) => (
           <div key={i} className="flex flex-col items-center gap-2">
             <div
-              className={`flex font-mono text-sm transition-colors ${bits[i] === 1 ? "text-white" : "text-green-900"}`}
+              className={`flex font-mono text-sm transition-colors ${bits[i] === 1 ? "text-green-800 font-bold" : "text-green-955"}`}
             >
               <span>2</span>
               <span className="text-[10px] -mt-1 font-bold">{p}</span>
@@ -120,11 +120,11 @@ export default function PuzzlePotencias({ numeroObjetivo, onAcerto, pontos }: Pr
             <button
               onClick={() => toggleBit(i)}
               disabled={sucesso || erros >= 3}
-              className={`w-12 h-16 md:w-14 md:h-20 flex flex-col items-center justify-center transition-all border-2 ${
+              className={`w-12 h-16 md:w-14 md:h-20 flex flex-col items-center justify-center transition-all border-2 cursor-pointer ${
                 bits[i] === 1
-                  ? "bg-green-600 border-white text-white shadow-[0_0_15px_rgba(34,197,94,0.4)]"
-                  : "bg-black border-green-900 text-green-900 hover:border-green-500"
-              } ${erroCritico && bits[i] === 1 ? "border-red-500 text-red-500" : ""}`}
+                  ? "bg-green-600 border-green-600 text-white shadow-[0_0_15px_rgba(34,197,94,0.2)]"
+                  : "bg-zinc-50 border-green-300 text-green-750 hover:border-green-600"
+              } ${erroCritico && bits[i] === 1 ? "border-red-500 text-red-600 bg-red-50" : ""}`}
             >
               <span className="text-2xl font-black">{bits[i]}</span>
             </button>
@@ -132,9 +132,9 @@ export default function PuzzlePotencias({ numeroObjetivo, onAcerto, pontos }: Pr
         ))}
       </div>
 
-      <div className="w-full h-2 bg-zinc-950 rounded-full overflow-hidden border border-green-900/30">
+      <div className="w-full h-2 bg-zinc-150 rounded-full overflow-hidden border border-green-200">
         <div
-          className={`h-full transition-all duration-500 ${erroCritico ? "bg-red-600" : "bg-green-500 shadow-[0_0_10px_#22c55e]"}`}
+          className={`h-full transition-all duration-500 ${erroCritico ? "bg-red-500" : "bg-green-650 shadow-[0_0_10px_#16a34a]"}`}
           style={{
             width: `${Math.min((somaAtual / numeroObjetivo) * 100, 100)}%`,
           }}
@@ -142,7 +142,7 @@ export default function PuzzlePotencias({ numeroObjetivo, onAcerto, pontos }: Pr
       </div>
 
       <div
-        className={`text-[10px] uppercase font-mono italic font-bold ${erroCritico ? "text-red-500" : "text-green-900"}`}
+        className={`text-[10px] uppercase font-mono italic font-bold ${erroCritico ? "text-red-600" : "text-green-800"}`}
       >
         {sucesso
           ? "Estrutura binária validada."

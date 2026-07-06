@@ -96,8 +96,8 @@ export default function Resultados() {
       <TerminalTitle title="RELATÓRIO_DE_MISSÃO" />
 
       {/* Painel de Resultados */}
-      <div className="w-full bg-zinc-950 border border-green-900 p-3 space-y-3 relative overflow-hidden">
-        <div className="absolute -top-5 -right-5 text-green-900/10 text-9xl font-black rotate-12 pointer-events-none">
+      <div className="w-full bg-white border border-green-300 p-3 space-y-3 relative overflow-hidden">
+        <div className="absolute -top-5 -right-5 text-green-900/5 text-9xl font-black rotate-12 pointer-events-none">
           {aprovado ? "PASS" : "FAIL"}
         </div>
 
@@ -111,33 +111,33 @@ export default function Resultados() {
           <InfoBlock label="TEMPO_DE_INVASÃO" value={tempoFormatado} />
         </div>
 
-        <div className="pt-2 border-t border-green-900/20 flex flex-col md:flex-row gap-4 items-center">
+        <div className="pt-2 border-t border-green-200 flex flex-col md:flex-row gap-4 items-center">
           <div className="flex-1 w-full">
-            <p className="text-[10px] text-green-700 mb-2 uppercase tracking-widest">
+            <p className="text-[10px] text-green-800 mb-2 uppercase tracking-widest text-left">
               Integridade_dos_Dados
             </p>
-            <div className="w-full h-3 bg-zinc-900 border border-green-900/30 rounded-full overflow-hidden">
+            <div className="w-full h-3 bg-zinc-100 border border-green-250 rounded-full overflow-hidden">
               <div
-                className={`h-full transition-all duration-1000 ${aprovado ? "bg-green-500 shadow-[0_0_10px_#22c55e]" : "bg-red-500"}`}
+                className={`h-full transition-all duration-1000 ${aprovado ? "bg-green-600 shadow-[0_0_10px_#16a34a]" : "bg-red-550"}`}
                 style={{ width: `${precisao}%` }}
               />
             </div>
-            <p className="text-[10px] text-right mt-1 text-green-600">
+            <p className="text-[10px] text-right mt-1 text-green-800">
               {precisao}% Precisão
             </p>
           </div>
 
-          <div className="bg-green-950/20 p-3 border border-green-900/30 rounded">
-            <p className="text-[10px] text-green-800 uppercase">Resumo_Fases</p>
+          <div className="bg-green-50 p-3 border border-green-250 rounded">
+            <p className="text-[10px] text-green-900 uppercase">Resumo_Fases</p>
             <div className="flex gap-1 mt-1 font-mono">
               {respostas.map((r, i) => {
-                let colorClass = "bg-zinc-700 border-zinc-500";
+                let colorClass = "bg-zinc-200 border-zinc-450";
                 let statusLabel = "PULO/TEMPO";
                 if (r === 1) {
-                  colorClass = "bg-green-500 border-green-400";
+                  colorClass = "bg-green-600 border-green-500";
                   statusLabel = "CORRETO";
                 } else if (r === -1) {
-                  colorClass = "bg-red-900 border-red-700";
+                  colorClass = "bg-red-500 border-red-400";
                   statusLabel = "ERRO";
                 }
                 return (
@@ -159,7 +159,7 @@ export default function Resultados() {
               aprovado ? "STATUS: AGENTE_NIVEL_1" : "STATUS: ACESSO_NEGADO"
             }
           />
-          <p className="text-xs text-green-800/80 italic ml-1">
+          <p className="text-xs text-green-900/80 italic ml-1 text-left">
             {aprovado
               ? "> Protocolo BitVenture concluído. Dados pedagógicos arquivados."
               : "> Falha na paridade de bits. Recomendado treinamento em lógica binária."}
@@ -175,8 +175,8 @@ export default function Resultados() {
             className="text-xs py-2 px-8"
           />
         </div>
-        <p className="text-[8px] text-green-900 tracking-tighter uppercase animate-pulse">
-          Sincronização ativa com servidor via Apps Script Protocol
+        <p className="text-[8px] text-green-800 tracking-tighter uppercase animate-pulse">
+          Sincronização activa com servidor via Apps Script Protocol
         </p>
       </div>
     </div>

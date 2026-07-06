@@ -124,18 +124,18 @@ export default function ProfessorDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-blue-400">Painel do Professor</h1>
+        <h1 className="text-4xl font-bold mb-8 text-blue-700">Painel do Professor</h1>
         
         {/* Controle da Partida */}
-        <div className="mb-8 p-6 bg-gray-800 rounded-lg border border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mb-8 p-6 bg-white rounded-lg border border-zinc-200 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div>
             <h2 className="text-xl font-bold mb-1">Status da Partida</h2>
             {loading ? (
-              <p className="text-gray-400">Carregando status...</p>
+              <p className="text-zinc-500">Carregando status...</p>
             ) : (
-              <p className={`text-lg font-semibold uppercase ${partidaEncerrada ? 'text-red-500' : 'text-green-400 animate-pulse'}`}>
+              <p className={`text-lg font-semibold uppercase ${partidaEncerrada ? 'text-red-600' : 'text-green-750 font-bold animate-pulse'}`}>
                 {partidaEncerrada ? '● Partida Parada' : '● Partida Ativa (Alunos Jogando)'}
               </p>
             )}
@@ -162,32 +162,32 @@ export default function ProfessorDashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link href="/professor/configuracao" 
-            className="p-6 bg-gray-800 rounded-lg shadow-lg hover:bg-gray-700 transition-colors border border-gray-700">
-            <h2 className="text-2xl font-semibold mb-2 text-green-400">Configurações da Partida</h2>
-            <p className="text-gray-400">Edite a quantidade de questões por nível e o tempo limite das questões.</p>
+            className="p-6 bg-white rounded-lg shadow-md hover:bg-zinc-50 transition-colors border border-zinc-200">
+            <h2 className="text-2xl font-semibold mb-2 text-green-700">Configurações da Partida</h2>
+            <p className="text-zinc-650">Edite a quantidade de questões por nível e o tempo limite das questões.</p>
           </Link>
 
           <Link href="/professor/questoes" 
-            className="p-6 bg-gray-800 rounded-lg shadow-lg hover:bg-gray-700 transition-colors border border-gray-700">
-            <h2 className="text-2xl font-semibold mb-2 text-yellow-400">Gestão de Questões</h2>
-            <p className="text-gray-400">Adicione, edite, remova ou desative questões do banco de dados.</p>
+            className="p-6 bg-white rounded-lg shadow-md hover:bg-zinc-50 transition-colors border border-zinc-200">
+            <h2 className="text-2xl font-semibold mb-2 text-yellow-750">Gestão de Questões</h2>
+            <p className="text-zinc-650">Adicione, edite, remova ou desative questões do banco de dados.</p>
           </Link>
         </div>
 
         {/* Exportar Dados (RF08) */}
-        <div className="mt-8 p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-lg">
-          <h2 className="text-2xl font-semibold mb-2 text-purple-400">Exportar Relatórios (RF08)</h2>
-          <p className="text-gray-400 mb-6 text-sm">
+        <div className="mt-8 p-6 bg-white rounded-lg border border-zinc-200 shadow-md">
+          <h2 className="text-2xl font-semibold mb-2 text-purple-700">Exportar Relatórios (RF08)</h2>
+          <p className="text-zinc-600 mb-6 text-sm">
             Exporte logs de jogo e notas dos alunos nos formatos CSV e JSON.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Formato</label>
+              <label className="block text-xs font-semibold uppercase text-zinc-500 mb-2">Formato</label>
               <select
                 value={exportFormat}
                 onChange={(e) => setExportFormat(e.target.value as 'csv' | 'json')}
-                className="w-full bg-gray-700 border border-gray-600 rounded p-2 text-sm outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full bg-zinc-50 border border-zinc-300 rounded p-2 text-sm outline-none focus:ring-2 focus:ring-purple-500 text-zinc-900"
               >
                 <option value="csv">CSV (Excel)</option>
                 <option value="json">JSON (Completo)</option>
@@ -195,21 +195,21 @@ export default function ProfessorDashboard() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">A partir de (Opcional)</label>
+              <label className="block text-xs font-semibold uppercase text-zinc-500 mb-2">A partir de (Opcional)</label>
               <input
                 type="datetime-local"
                 value={filterSince}
                 onChange={(e) => setFilterSince(e.target.value)}
-                className="w-full bg-gray-700 border border-gray-600 rounded p-2 text-sm outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                className="w-full bg-zinc-50 border border-zinc-300 rounded p-2 text-sm outline-none focus:ring-2 focus:ring-purple-500 text-zinc-900"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Aluno (Opcional)</label>
+              <label className="block text-xs font-semibold uppercase text-zinc-500 mb-2">Aluno (Opcional)</label>
               <select
                 value={filterAlunoId}
                 onChange={(e) => setFilterAlunoId(e.target.value)}
-                className="w-full bg-gray-700 border border-gray-600 rounded p-2 text-sm outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full bg-zinc-50 border border-zinc-300 rounded p-2 text-sm outline-none focus:ring-2 focus:ring-purple-500 text-zinc-900"
               >
                 <option value="">Todos os Alunos</option>
                 {alunos.map((aluno) => (
@@ -221,11 +221,11 @@ export default function ProfessorDashboard() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-400 mb-2">Nível (Opcional)</label>
+              <label className="block text-xs font-semibold uppercase text-zinc-500 mb-2">Nível (Opcional)</label>
               <select
                 value={filterNivel}
                 onChange={(e) => setFilterNivel(e.target.value)}
-                className="w-full bg-gray-700 border border-gray-600 rounded p-2 text-sm outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full bg-zinc-50 border border-zinc-300 rounded p-2 text-sm outline-none focus:ring-2 focus:ring-purple-500 text-zinc-900"
               >
                 <option value="">Todos os Níveis</option>
                 <option value="1">Nível 1 (Básico)</option>
@@ -236,10 +236,10 @@ export default function ProfessorDashboard() {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-gray-700 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-zinc-200 pt-4">
             <div className="text-sm font-semibold">
               {exportMessage && (
-                <span className={exportMessage.type === 'success' ? 'text-green-400' : 'text-red-400'}>
+                <span className={exportMessage.type === 'success' ? 'text-green-700' : 'text-red-650'}>
                   {exportMessage.text}
                 </span>
               )}
@@ -247,7 +247,7 @@ export default function ProfessorDashboard() {
             <button
               onClick={handleExport}
               disabled={exporting}
-              className="bg-purple-600 hover:bg-purple-700 disabled:bg-purple-800 text-white font-bold px-6 py-2 rounded transition-all duration-300 active:scale-95 flex items-center gap-2 cursor-pointer text-sm"
+              className="bg-purple-650 hover:bg-purple-700 disabled:bg-purple-800 text-white font-bold px-6 py-2 rounded transition-all duration-300 active:scale-95 flex items-center gap-2 cursor-pointer text-sm"
             >
               {exporting ? 'Exportando...' : 'Exportar Dados'}
             </button>
@@ -255,7 +255,7 @@ export default function ProfessorDashboard() {
         </div>
 
         <div className="mt-12">
-           <Link href="/" className="text-blue-400 hover:underline">← Voltar para a Home</Link>
+           <Link href="/" className="text-blue-600 hover:underline">← Voltar para a Home</Link>
         </div>
       </div>
     </div>

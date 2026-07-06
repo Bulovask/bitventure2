@@ -25,7 +25,7 @@ export default function JogoPage() {
   if (!nome) return <div className="p-8 text-green-500 font-mono">Inicializando Sistema...</div>;
 
   return (
-    <main className="min-h-screen bg-black text-green-500 p-4 md:p-8">
+    <main className="min-h-screen bg-zinc-50 text-green-700 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         {telaAtiva === 'fases' && <Fases />}
         {telaAtiva === 'resultados' && <Resultados />}

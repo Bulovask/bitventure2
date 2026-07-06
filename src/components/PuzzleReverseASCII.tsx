@@ -66,10 +66,10 @@ export default function PuzzleReverseASCII({ letraObjetivo, onAcerto, pontos }: 
     <div
       className={`flex flex-col items-center gap-6 p-6 border-2 transition-all duration-300 rounded-lg relative w-full ${
         sucesso
-          ? "border-purple-400 bg-purple-500/10 shadow-[0_0_30px_rgba(168,85,247,0.2)]"
+          ? "border-purple-600 bg-purple-50 shadow-[0_0_30px_rgba(168,85,247,0.1)]"
           : erroCritico
-          ? "border-red-600 bg-red-900/20 animate-shake"
-          : "border-green-900 bg-zinc-900/30"
+          ? "border-red-500 bg-red-50 animate-shake"
+          : "border-green-300 bg-white"
       }`}
     >
       {/* Sistema de Vidas */}
@@ -78,7 +78,7 @@ export default function PuzzleReverseASCII({ letraObjetivo, onAcerto, pontos }: 
           <div 
             key={i} 
             className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-              i < erros ? 'bg-red-600 shadow-[0_0_8px_red]' : 'bg-purple-900/40'
+              i < erros ? 'bg-red-500' : 'bg-purple-200'
             }`} 
           />
         ))}
@@ -86,40 +86,40 @@ export default function PuzzleReverseASCII({ letraObjetivo, onAcerto, pontos }: 
 
       <div className="text-center space-y-1">
         <p className={`text-[10px] uppercase tracking-widest font-bold transition-colors ${
-          erroCritico ? "text-red-500" : "text-purple-500"
+          erroCritico ? "text-red-650" : "text-purple-750"
         }`}>
           {erroCritico ? "[ ALERTA: OVERFLOW_ASCII ]" : "[ MODO: CODIFICADOR_ASCII ]"}
         </p>
-        <h2 className="text-sm text-white opacity-80 italic font-mono uppercase">
+        <h2 className="text-sm text-zinc-950 opacity-80 italic font-mono uppercase">
           Gere o caractere objetivo através dos bits:
         </h2>
       </div>
 
       {/* Painel de Objetivo */}
       <div className={`flex gap-6 items-center border-y-2 py-2 w-full justify-center transition-colors ${
-        erroCritico ? "border-red-900/50 bg-red-950/20" : "border-purple-900/50 bg-black/30"
+        erroCritico ? "border-red-200 bg-red-50" : "border-purple-200 bg-purple-50/50"
       }`}>
         <div className="text-center">
-          <p className="text-[10px] text-purple-700 font-mono">OBJETIVO</p>
-          <p className={`text-4xl font-black transition-colors ${erroCritico ? "text-red-500" : "text-white"}`}>
+          <p className="text-[10px] text-purple-850 font-mono font-bold">OBJETIVO</p>
+          <p className={`text-4xl font-black transition-colors ${erroCritico ? "text-red-650" : "text-zinc-950"}`}>
             {letraObjetivo}
           </p>
         </div>
-        <div className="text-4xl font-light text-purple-900 opacity-30">→</div>
+        <div className="text-4xl font-light text-purple-200 opacity-50">→</div>
         <div className="text-center">
-          <p className="text-[10px] text-purple-700 font-mono">DECIMAL</p>
-          <p className="text-4xl font-black text-purple-400">{decimalObjetivo}</p>
+          <p className="text-[10px] text-purple-850 font-mono font-bold">DECIMAL</p>
+          <p className="text-4xl font-black text-purple-750">{decimalObjetivo}</p>
         </div>
       </div>
 
       {/* Display em Tempo Real */}
       <div className={`text-center p-3 border rounded-md w-full max-w-sm transition-all ${
-        erroCritico ? "bg-red-900/40 border-red-600" : "bg-black/50 border-purple-900"
+        erroCritico ? "bg-red-50 border-red-300" : "bg-zinc-50 border-purple-250"
       }`}>
-        <p className="text-xs text-purple-300 font-mono">
-          Soma: <span className={`text-xl font-bold ${erroCritico ? "text-red-500" : "text-white"}`}>{somaAtual}</span>
+        <p className="text-xs text-purple-800 font-mono">
+          Soma: <span className={`text-xl font-bold ${erroCritico ? "text-red-650" : "text-zinc-950"}`}>{somaAtual}</span>
           <span className="mx-2 opacity-30">|</span>
-          Char: <span className="font-bold text-2xl text-purple-400 font-sans">{caractereAtual}</span>
+          Char: <span className="font-bold text-2xl text-purple-750 font-sans">{caractereAtual}</span>
         </p>
       </div>
 
@@ -127,17 +127,17 @@ export default function PuzzleReverseASCII({ letraObjetivo, onAcerto, pontos }: 
       <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
         {bits.map((bit, i) => (
           <div key={i} className="flex flex-col items-center gap-2">
-            <span className={`text-[10px] font-bold ${sucesso ? "text-purple-400" : "text-green-800"}`}>
+            <span className={`text-[10px] font-bold ${sucesso ? "text-purple-750" : "text-green-800"}`}>
               {pesos[i]}
             </span>
             <button
               onClick={() => toggleBit(i)}
               disabled={sucesso || erroCritico}
-              className={`w-10 h-12 md:w-12 md:h-14 flex items-center justify-center text-xl font-black transition-all border-2 ${
+              className={`w-10 h-12 md:w-12 md:h-14 flex items-center justify-center text-xl font-black transition-all border-2 cursor-pointer ${
                 bit === 1
-                  ? "bg-purple-500 border-white text-black shadow-[0_0_15px_rgba(168,85,247,0.5)]"
-                  : "bg-zinc-950 border-green-900 text-green-900 hover:border-purple-500"
-              } ${erroCritico && bit === 1 ? "border-red-500 text-red-500" : ""}`}
+                  ? "bg-purple-650 border-purple-650 text-white shadow-[0_0_15px_rgba(168,85,247,0.2)]"
+                  : "bg-zinc-50 border-green-300 text-green-700 hover:border-purple-600"
+              } ${erroCritico && bit === 1 ? "border-red-500 text-red-650 bg-red-50" : ""}`}
             >
               {bit}
             </button>
@@ -146,7 +146,7 @@ export default function PuzzleReverseASCII({ letraObjetivo, onAcerto, pontos }: 
       </div>
 
       <div className={`text-[10px] uppercase font-mono italic h-4 transition-colors ${
-        erroCritico ? "text-red-500 animate-pulse" : "text-purple-900"
+        erroCritico ? "text-red-650 animate-pulse" : "text-purple-850"
       }`}>
         {sucesso
           ? "Codificação aceita. Sincronizando fluxo..."

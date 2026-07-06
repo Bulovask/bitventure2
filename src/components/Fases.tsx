@@ -230,14 +230,14 @@ export default function Fases() {
             {...props} />;
       default:
         return (
-          <div className="p-6 border-2 border-red-900 bg-red-900/20 text-red-500 rounded-lg">
+          <div className="p-6 border-2 border-red-300 bg-red-50 text-red-600 rounded-lg">
             [ERRO] Tipo de questão não suportado: {questaoAtual.tipo}
           </div>
         );
     }
   };
 
-  if (loading) return <div className="text-green-500 font-mono">Sincronizando...</div>;
+  if (loading) return <div className="text-green-700 font-mono">Sincronizando...</div>;
 
   return (
     <div className="py-1 font-mono">
@@ -250,15 +250,15 @@ export default function Fases() {
       />
 
       {tempoRestante !== null && (
-        <div className="w-full bg-zinc-950 border border-green-900/30 p-2 mb-4 flex justify-between items-center text-xs font-mono">
-          <span className="text-green-800 text-[10px]">SISTEMA_DURABILIDADE_DE_LINK:</span>
-          <div className="flex-1 mx-4 bg-zinc-900 h-2 border border-green-950 rounded-sm overflow-hidden relative">
+        <div className="w-full bg-zinc-100 border border-green-200 p-2 mb-4 flex justify-between items-center text-xs font-mono">
+          <span className="text-green-900 text-[10px]">SISTEMA_DURABILIDADE_DE_LINK:</span>
+          <div className="flex-1 mx-4 bg-zinc-200 h-2 border border-green-350 rounded-sm overflow-hidden relative">
             <div
-              className={`h-full transition-all duration-1000 ${tempoRestante <= 5 ? 'bg-red-500 shadow-[0_0_10px_red]' : 'bg-green-500 shadow-[0_0_10px_#22c55e]'}`}
+              className={`h-full transition-all duration-1000 ${tempoRestante <= 5 ? 'bg-red-500 shadow-[0_0_10px_red]' : 'bg-green-600 shadow-[0_0_10px_#16a34a]'}`}
               style={{ width: `${(tempoRestante / tempoLimiteTotal) * 100}%` }}
             />
           </div>
-          <span className={`font-bold ${tempoRestante <= 5 ? 'text-red-500 animate-pulse' : 'text-green-400'}`}>
+          <span className={`font-bold ${tempoRestante <= 5 ? 'text-red-600 animate-pulse' : 'text-green-700'}`}>
             {tempoRestante}s
           </span>
         </div>
@@ -268,15 +268,15 @@ export default function Fases() {
         {renderPuzzle()}
       </div>
 
-      <div className="mt-4 flex justify-between items-center bg-zinc-950/40 p-3 border border-green-900/20 rounded">
+      <div className="mt-4 flex justify-between items-center bg-zinc-100 p-3 border border-green-200 rounded">
         <button
           onClick={() => registrarSemResposta(0)}
           type="button"
-          className="group relative overflow-hidden border border-amber-600/50 px-6 py-1.5 font-bold text-amber-500 hover:text-black hover:bg-amber-500 transition-all duration-300 text-xs uppercase cursor-pointer"
+          className="group relative overflow-hidden border border-amber-600 px-6 py-1.5 font-bold text-amber-700 hover:text-white hover:bg-amber-600 transition-all duration-300 text-xs uppercase cursor-pointer"
         >
           [ PULAR_QUESTÃO ]
         </button>
-        <p className="text-[9px] text-green-700 uppercase tracking-wider hidden sm:block">
+        <p className="text-[9px] text-green-800 uppercase tracking-wider hidden sm:block">
           o pulo registrará 0 pontos e avançará à próxima fase
         </p>
       </div>
