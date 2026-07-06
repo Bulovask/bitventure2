@@ -49,15 +49,17 @@ complexidade crescente, respeitando a curva de aprendizado do estudante:
     seu correspondente binário e vice-versa. (Exemplo: Caractere "A" para 
     01000001).
 
-* NÍVEL 3: Avançado (Decodificação de Sequências Binárias)
+* NÍVEL 3: Avançado (Decodificação de Sequências Decimais ASCII)
+  - Foco: Emprego da tabela ASCII decimal para composição de palavras.
+  - Dinâmica: Apresenta-se uma sequência de valores decimais associados aos 
+    códigos da tabela. O estudante deve interpretar e reescrever a palavra.
+
+* NÍVEL 4: Desafio (Decodificação de Sequências Binárias)
   - Foco: Processamento e síntese de palavras através de bytes binários.
   - Dinâmica: Apresenta-se uma palavra codificada como uma sequência de bytes 
     separados por espaços. O estudante deve traduzir a palavra completa.
 
-* NÍVEL 4: Desafio (Decodificação de Sequências Decimais ASCII)
-  - Foco: Emprego da tabela ASCII decimal para composição de palavras.
-  - Dinâmica: Apresenta-se uma sequência de valores decimais associados aos 
-    códigos da tabela. O estudante deve interpretar e reescrever a palavra.
+
 
 
 4. MECANISMOS DE FUNCIONAMENTO E DINÂMICA DO JOGO (GAMIFICAÇÃO)
@@ -95,8 +97,8 @@ com ferramentas de controle e acompanhamento diagnóstico:
   progressão. Isso permite adaptar o jogo ao ritmo e nível de cada turma.
 * Controle de Fluxo em Tempo Real: O painel docente oferece um controle global 
   da atividade. Caso o tempo de aula se encerre, o professor pode acionar um 
-  mecanismo de encerramento programado ("Botão de Parar"), concedendo um tempo 
-  limite final unificado de 2 minutos para que os alunos concluam seus envios.
+  mecanismo de encerramento programado ("Botão de Parar"), permitindo que os 
+  alunos concluam a questão que estão antes de encerrar de vez.
 * Avaliação Formativa de Resultados: O docente pode exportar todos os dados da 
   partida (notas finais, tempos de execução e histórico detalhado de erros e 
   acertos) nos formatos padronizados CSV e JSON, o que facilita a análise 
@@ -113,8 +115,8 @@ específica para salas de aula:
 * Paradigma "Offline-First" (Rede Local - LAN): A aplicação opera localmente. 
   Apenas a máquina do professor necessita executar o servidor da aplicação. 
   Os alunos conectam-se a uma rede sem fio (Wi-Fi) criada por um roteador comum 
-  desconectado da internet e acessam a ferramenta pelo navegador do celular ou 
-  tablet.
+  desconectado da internet e acessam a ferramenta pelo navegador do laptop da 
+  escola, celular ou tablet.
 * Tecnologia de Transmissão Leve (Server-Sent Events - SSE): Em vez de requerer 
   altas taxas de transferência de rede, o sistema atualiza as pontuações e o 
   status do ranking por meio de fluxos unidirecionais de dados em tempo real, 
