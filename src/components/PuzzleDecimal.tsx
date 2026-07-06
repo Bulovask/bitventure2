@@ -75,19 +75,19 @@ export default function PuzzleDecimal({
     <div
       className={`flex flex-col items-center gap-6 p-6 border-2 transition-all duration-500 rounded-lg relative w-full ${
         sucesso
-          ? "border-green-600 bg-green-50 shadow-[0_0_30px_rgba(34,197,94,0.1)]"
+          ? "border-emerald-500 bg-emerald-150/40 shadow-[0_0_30px_rgba(16,185,129,0.1)]"
           : erro
           ? "border-red-500 bg-red-50 animate-shake"
-          : "border-green-300 bg-white"
+          : "border-emerald-300 bg-emerald-50/20 shadow-sm"
       }`}
     >
       {/* 3. Indicador de Vidas (Erros) */}
-      <div className="absolute top-4 right-4 flex gap-1.5">
+      <div className="absolute top-4 right-4 flex gap-1.5 bg-white/60 border border-emerald-100 p-1 rounded-full px-2">
         {[...Array(3)].map((_, i) => (
           <div 
             key={i} 
             className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-              i < erros ? 'bg-red-500' : 'bg-green-200'
+              i < erros ? 'bg-red-550 shadow-[0_0_5px_rgba(220,38,38,0.5)]' : 'bg-emerald-300'
             }`} 
           />
         ))}
@@ -95,7 +95,7 @@ export default function PuzzleDecimal({
 
       <div className="text-center space-y-1">
         <p className={`text-[10px] uppercase tracking-[0.2em] font-bold transition-colors ${
-          erro ? "text-red-650" : "text-green-700"
+          erro ? "text-red-650" : "text-emerald-800"
         }`}>
           {erro ? "[ ALERTA: PARIDADE_INCÓRRETA ]" : "[ MODO: DECODIFICAÇÃO_INVERSA ]"}
         </p>
@@ -110,18 +110,18 @@ export default function PuzzleDecimal({
             <span
               className={`text-[9px] font-mono font-bold transition-all duration-500 ${
                 mostrarDica ? "opacity-100" : "opacity-0"
-              } ${bit === 1 && !sucesso && !erro ? "text-green-750 font-bold" : "text-green-900/60"}`}
+              } ${bit === 1 && !sucesso && !erro ? "text-emerald-700 font-extrabold" : "text-emerald-950/60"}`}
             >
               {valoresPosicionais[i]}
             </span>
 
             <div
-              className={`w-10 h-14 md:w-12 md:h-16 flex items-center justify-center text-2xl font-black border-2 transition-all ${
+              className={`w-10 h-14 md:w-12 md:h-16 flex items-center justify-center text-2xl font-black border-2 transition-all rounded-md ${
                 bit === 1
                   ? erro 
-                    ? "border-red-500 text-red-600 bg-red-50" 
-                    : "border-green-600 text-green-700 bg-green-50"
-                  : "border-zinc-300 text-zinc-400 bg-zinc-50"
+                    ? "border-red-500 text-red-600 bg-red-50 shadow-sm" 
+                    : "border-emerald-500 text-emerald-800 bg-emerald-100 shadow-[inset_0_0_10px_rgba(16,185,129,0.1)] font-extrabold"
+                  : "border-zinc-250 text-zinc-400 bg-white"
               }`}
             >
               {bit}
@@ -139,11 +139,11 @@ export default function PuzzleDecimal({
             disabled={sucesso || (erros >= 3)}
             onChange={(e) => setInputValor(e.target.value)}
             placeholder="RESPOSTA_?"
-            className={`w-full bg-zinc-50 border-2 p-4 text-center text-3xl font-mono focus:outline-none transition-all ${
+            className={`w-full bg-white border-2 p-4 text-center text-3xl font-mono focus:outline-none transition-all rounded-md ${
               erro
-                ? "border-red-550 text-red-600"
-                : "border-green-300 focus:border-green-600 text-green-700"
-            } ${sucesso ? "border-green-600 text-green-700 bg-green-50" : ""}`}
+                ? "border-red-550 text-red-600 focus:border-red-600"
+                : "border-emerald-350 focus:border-emerald-600 text-emerald-800"
+            } ${sucesso ? "border-emerald-500 text-emerald-800 bg-emerald-50/50 font-bold" : ""}`}
           />
         </div>
 
@@ -155,7 +155,7 @@ export default function PuzzleDecimal({
         />
       </form>
 
-      <div className={`text-[10px] uppercase font-medium h-4 transition-colors ${erro ? "text-red-600 animate-pulse" : "text-green-800"}`}>
+      <div className={`text-[10px] uppercase font-bold h-4 transition-colors ${erro ? "text-red-600 animate-pulse" : "text-emerald-850"}`}>
         {!sucesso && !erro && mostrarDica && "Dica: Some os pesos superiores dos bits ativos."}
         {erro && `Tentativa ${erros}/3 falhou. Recalcule os bits ativos.`}
         {sucesso && "Acesso concedido. Sincronizando..."}

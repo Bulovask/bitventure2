@@ -70,19 +70,19 @@ export default function PuzzleBinario({ numeroObjetivo, onAcerto, pontos }: Puzz
     <div
       className={`flex flex-col items-center gap-8 p-6 transition-all duration-300 border-2 rounded-lg relative w-full ${
         sucesso
-          ? "bg-green-50 border-green-600 shadow-[0_0_30px_rgba(34,197,94,0.15)]"
+          ? "bg-emerald-100/50 border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.15)]"
           : erroCritico
-          ? "bg-red-50 border-red-500 animate-shake"
-          : "bg-white border-green-300"
+          ? "bg-red-550/10 border-red-500 animate-shake"
+          : "bg-emerald-50/20 border-emerald-300 shadow-sm"
       }`}
     >
       {/* Contador de Vidas (Erros) */}
-      <div className="absolute top-4 right-4 flex gap-1.5">
+      <div className="absolute top-4 right-4 flex gap-1.5 bg-white/60 border border-emerald-100 p-1 rounded-full px-2">
         {[...Array(3)].map((_, i) => (
           <div 
             key={i} 
             className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-              i < erros ? 'bg-red-500' : 'bg-green-200'
+              i < erros ? 'bg-red-500 shadow-[0_0_5px_rgba(220,38,38,0.5)]' : 'bg-emerald-300'
             }`} 
           />
         ))}
@@ -90,47 +90,47 @@ export default function PuzzleBinario({ numeroObjetivo, onAcerto, pontos }: Puzz
 
       <div className="text-center space-y-2">
         <p className={`text-xs uppercase tracking-[0.2em] font-bold transition-colors ${
-          sucesso ? "text-green-700" : erroCritico ? "text-red-650" : "text-green-800"
+          sucesso ? "text-emerald-700" : erroCritico ? "text-red-650" : "text-emerald-800"
         }`}>
           {sucesso ? "[ STATUS: DECODIFICADO ]" : erroCritico ? "[ ALERTA: SOBRECARGA ]" : "Objetivo_Decimal"}
         </p>
         <h2 className={`text-6xl font-black transition-all duration-300 ${
-          sucesso ? "text-green-700 scale-105" : erroCritico ? "text-red-600" : "text-zinc-950"
+          sucesso ? "text-emerald-700 scale-105" : erroCritico ? "text-red-600" : "text-zinc-950"
         }`}>
           {numeroObjetivo}
         </h2>
       </div>
 
-      <div className={`w-full p-4 border-y transition-all duration-300 min-h-16 flex items-center justify-center font-mono ${
-        sucesso ? "bg-green-50 border-green-300" : erroCritico ? "bg-red-50 border-red-200" : "bg-zinc-50 border-green-200"
+      <div className={`w-full p-4 border-y transition-all duration-300 min-h-16 flex items-center justify-center font-mono rounded-sm shadow-inner ${
+        sucesso ? "bg-emerald-100 border-emerald-300" : erroCritico ? "bg-red-50 border-red-200" : "bg-emerald-50/80 border-emerald-200"
       }`}>
-        <p className={`text-xl transition-colors ${sucesso ? "text-zinc-900 font-bold" : erroCritico ? "text-red-700" : "text-green-700"}`}>
+        <p className={`text-xl transition-colors ${sucesso ? "text-zinc-900 font-bold" : erroCritico ? "text-red-700" : "text-emerald-800 font-bold"}`}>
           {parcelasAtivas.length > 0 ? (
             <>
               {parcelasAtivas.join(" + ")} ={" "}
               <span className="font-bold underline">{somaAtual}</span>
             </>
           ) : (
-            <span className="text-zinc-450 opacity-50">000 + 000 = 0</span>
+            <span className="text-emerald-950/40 font-bold">000 + 000 = 0</span>
           )}
         </p>
       </div>
 
-      <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
+      <div className="grid grid-cols-4 md:grid-cols-8 gap-3 bg-white/40 p-3 rounded-lg border border-emerald-100">
         {bits.map((bit, i) => (
           <div key={i} className="flex flex-col items-center gap-2">
             <span className={`text-[10px] font-bold transition-colors ${
-              sucesso ? "text-green-700" : erroCritico ? "text-red-750" : "text-green-850"
+              sucesso ? "text-emerald-850" : "text-emerald-950/60"
             }`}>
               {valores[i]}
             </span>
             <button
               onClick={() => toggleBit(i)}
               disabled={sucesso || erroCritico}
-              className={`w-12 h-16 md:w-14 md:h-20 flex items-center justify-center text-2xl font-black transition-all duration-200 border-2 cursor-pointer ${
+              className={`w-12 h-16 md:w-14 md:h-20 flex items-center justify-center text-2xl font-black transition-all duration-200 border-2 cursor-pointer rounded-md ${
                 bit === 1
-                  ? "bg-green-600 border-green-600 text-white shadow-[0_0_15px_rgba(34,197,94,0.15)]"
-                  : "bg-zinc-50 border-green-300 text-green-750 hover:border-green-600"
+                  ? "bg-emerald-600 border-emerald-600 text-white shadow-sm font-bold"
+                  : "bg-white border-emerald-300 text-emerald-800 hover:border-emerald-650"
               } ${erroCritico && bit === 1 ? "border-red-500 text-red-650 bg-red-50" : ""}`}
             >
               {bit}
@@ -139,8 +139,8 @@ export default function PuzzleBinario({ numeroObjetivo, onAcerto, pontos }: Puzz
         ))}
       </div>
 
-      <div className={`text-[10px] uppercase font-medium tracking-tight transition-colors ${
-        erroCritico ? "text-red-600 animate-pulse" : "text-green-800"
+      <div className={`text-[10px] uppercase font-bold tracking-tight transition-colors ${
+        erroCritico ? "text-red-600 animate-pulse" : "text-emerald-850"
       }`}>
         {sucesso
           ? "Aguardando sincronização de dados..."

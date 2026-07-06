@@ -250,15 +250,15 @@ export default function Fases() {
       />
 
       {tempoRestante !== null && (
-        <div className="w-full bg-zinc-100 border border-green-200 p-2 mb-4 flex justify-between items-center text-xs font-mono">
+        <div className="w-full bg-emerald-50/50 border border-emerald-250 p-2 mb-4 flex justify-between items-center text-xs font-mono rounded shadow-sm">
           <span className="text-green-900 text-[10px]">SISTEMA_DURABILIDADE_DE_LINK:</span>
-          <div className="flex-1 mx-4 bg-zinc-200 h-2 border border-green-350 rounded-sm overflow-hidden relative">
+          <div className="flex-1 mx-4 bg-zinc-100 h-2 border border-green-300 rounded-sm overflow-hidden relative">
             <div
               className={`h-full transition-all duration-1000 ${tempoRestante <= 5 ? 'bg-red-500 shadow-[0_0_10px_red]' : 'bg-green-600 shadow-[0_0_10px_#16a34a]'}`}
               style={{ width: `${(tempoRestante / tempoLimiteTotal) * 100}%` }}
             />
           </div>
-          <span className={`font-bold ${tempoRestante <= 5 ? 'text-red-600 animate-pulse' : 'text-green-700'}`}>
+          <span className={`font-bold ${tempoRestante <= 5 ? 'text-red-600 animate-pulse' : 'text-green-755'}`}>
             {tempoRestante}s
           </span>
         </div>
@@ -268,7 +268,7 @@ export default function Fases() {
         {renderPuzzle()}
       </div>
 
-      <div className="mt-4 flex justify-between items-center bg-zinc-100 p-3 border border-green-200 rounded">
+      <div className="mt-4 flex justify-between items-center bg-amber-50/50 p-3 border border-amber-250 rounded shadow-sm">
         <button
           onClick={() => registrarSemResposta(0)}
           type="button"
@@ -276,7 +276,7 @@ export default function Fases() {
         >
           [ PULAR_QUESTÃO ]
         </button>
-        <p className="text-[9px] text-green-800 uppercase tracking-wider hidden sm:block">
+        <p className="text-[9px] text-amber-900 font-bold uppercase tracking-wider hidden sm:block">
           o pulo registrará 0 pontos e avançará à próxima fase
         </p>
       </div>

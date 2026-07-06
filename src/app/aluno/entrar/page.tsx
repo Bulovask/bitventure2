@@ -50,11 +50,11 @@ export default function EntrarPartida() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-zinc-50 text-green-700 font-mono p-4">
-      <div className="max-w-md w-full bg-white border-2 border-green-300 rounded-lg p-6 md:p-8 flex flex-col gap-6 relative shadow-[0_0_30px_rgba(34,197,94,0.05)]">
+    <main className="min-h-screen flex items-center justify-center bg-slate-50 text-green-800 font-mono p-4">
+      <div className="max-w-md w-full bg-emerald-50/45 border-2 border-emerald-300 rounded-lg p-6 md:p-8 flex flex-col gap-6 relative shadow-[0_0_40px_rgba(16,185,129,0.06)]">
         
         {/* Cabeçalho do Terminal Decoração */}
-        <div className="flex justify-between border-b border-green-200 pb-2 mb-2 text-[10px] uppercase tracking-widest text-green-900 select-none">
+        <div className="flex justify-between border-b border-emerald-250 pb-2 mb-2 text-[10px] uppercase tracking-widest text-emerald-950 select-none">
           <div>[ DISPOSITIVO: TERMINAL_DISCENTE ]</div>
           <div className="animate-pulse">● CONECTADO</div>
         </div>
@@ -64,14 +64,14 @@ export default function EntrarPartida() {
             title="BITVENTURE 2" 
             subtitle="INICIALIZAÇÃO DO CONTEXTO DE AVALIAÇÃO" 
           />
-          <p className="text-xs text-green-800 uppercase">
+          <p className="text-xs text-emerald-900 uppercase">
             Por favor, identifique-se para carregar os módulos de numeração binária, caracteres e decodificação ASCII.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <label htmlFor="nome" className="block text-xs uppercase tracking-widest text-green-800 font-bold">
+            <label htmlFor="nome" className="block text-xs uppercase tracking-widest text-emerald-950 font-bold">
               [ NOME_DO_ALUNO ]
             </label>
             <input
@@ -82,13 +82,13 @@ export default function EntrarPartida() {
               placeholder="DIGITE_AQUI..."
               required
               disabled={loading}
-              className="w-full bg-zinc-50 border-2 border-green-300 p-4 text-center text-xl font-mono text-green-700 focus:outline-none focus:border-green-600 transition-all uppercase placeholder-green-300"
+              className="w-full bg-white border-2 border-emerald-300 p-4 text-center text-xl font-mono text-emerald-800 focus:outline-none focus:border-emerald-600 transition-all uppercase placeholder-emerald-300"
               autoFocus
             />
           </div>
 
           {error && (
-            <div className="bg-red-50 text-red-600 p-3 rounded border border-red-300 text-xs font-mono uppercase tracking-wider">
+            <div className="bg-red-50 text-red-650 p-3 rounded border border-red-300 text-xs font-mono uppercase tracking-wider">
               [ ERRO_DE_CONEXÃO: {error} ]
             </div>
           )}
@@ -101,8 +101,8 @@ export default function EntrarPartida() {
           />
         </form>
 
-        <div className="mt-4 pt-4 border-t border-green-200 text-center">
-          <p className="text-[9px] text-green-900 uppercase tracking-widest select-none">
+        <div className="mt-4 pt-4 border-t border-emerald-200 text-center">
+          <p className="text-[9px] text-emerald-950 uppercase tracking-widest select-none">
             PROGRAMA DE INICIAÇÃO À DOCÊNCIA — PIBID COMPUTAÇÃO
           </p>
         </div>
