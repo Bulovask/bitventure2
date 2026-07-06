@@ -1,0 +1,141 @@
+================================================================================
+          VISÃO GERAL DO PROJETO: BITVENTURE 2 (VERSÃO 2.0)
+   Uma Plataforma de Avaliação Gamificada e Aprendizagem Ativa em Computação
+================================================================================
+
+1. INTRODUÇÃO E CONTEXTUALIZAÇÃO PEDAGÓGICA
+--------------------------------------------------------------------------------
+O Bitventure 2 é uma ferramenta pedagógica de avaliação formativa e gamificada, 
+concebida no escopo do Programa Institucional de Bolsa de Iniciação à Docência 
+(PIBID). O projeto visa auxiliar o processo de ensino-aprendizagem no campo da 
+Ciência da Computação, especificamente no estudo dos sistemas de representação 
+numérica (sistema binário) e de codificação de caracteres (tabela ASCII).
+
+Por meio de uma abordagem baseada em metodologias ativas e gamificação, o 
+sistema transforma o teste de conhecimentos tradicional em uma dinâmica de 
+desafios interativos e lúdicos. O principal diferencial pedagógico é colocar o 
+estudante no centro do processo, estimulando o raciocínio lógico rápido e a 
+autonomia cognitiva em um ambiente cooperativo e, ao mesmo tempo, competitivo.
+
+
+2. OBJETIVOS EDUCACIONAIS
+--------------------------------------------------------------------------------
+Os objetivos pedagógicos da plataforma dividem-se em três dimensões principais:
+
+a) Compreensão Conceitual: Capacitar os alunos a entenderem a transição lógica 
+   entre a base decimal (comumente utilizada por humanos) e a base binária 
+   (linguagem de máquina dos computadores).
+b) Abstração e Codificação: Demonstrar de forma prática como a informação 
+   textual e os caracteres alfanuméricos são codificados em impulsos elétricos 
+   (representados por bits e bytes) a partir do padrão ASCII.
+c) Raciocínio Lógico e Fluência Quantitativa: Incentivar o cálculo mental rápido 
+   e a aplicação sistemática de regras de conversão sob condições de tempo 
+   delimitado.
+
+
+3. PROGRESSÃO COGNITIVA E DESIGN DOS NÍVEIS
+--------------------------------------------------------------------------------
+A estrutura de desafios do Bitventure 2 é organizada em quatro níveis de 
+complexidade crescente, respeitando a curva de aprendizado do estudante:
+
+* NÍVEL 1: Básico (Conversão Numérica Pura)
+  - Foco: Transposição direta entre as bases numéricas decimal e binária.
+  - Dinâmica: O estudante converte números binários de 8 bits para decimais e 
+    vice-versa. (Exemplo: 00001010 para 10, e 15 para 00001111).
+
+* NÍVEL 2: Intermediário (Mapeamento de Caractere Único)
+  - Foco: Introdução à tabela de códigos ASCII.
+  - Dinâmica: O estudante converte caracteres alfabéticos simples (A a Z) para 
+    seu correspondente binário e vice-versa. (Exemplo: Caractere "A" para 
+    01000001).
+
+* NÍVEL 3: Avançado (Decodificação de Sequências Binárias)
+  - Foco: Processamento e síntese de palavras através de bytes binários.
+  - Dinâmica: Apresenta-se uma palavra codificada como uma sequência de bytes 
+    separados por espaços. O estudante deve traduzir a palavra completa.
+
+* NÍVEL 4: Desafio (Decodificação de Sequências Decimais ASCII)
+  - Foco: Emprego da tabela ASCII decimal para composição de palavras.
+  - Dinâmica: Apresenta-se uma sequência de valores decimais associados aos 
+    códigos da tabela. O estudante deve interpretar e reescrever a palavra.
+
+
+4. MECANISMOS DE FUNCIONAMENTO E DINÂMICA DO JOGO (GAMIFICAÇÃO)
+--------------------------------------------------------------------------------
+Para engajar os discentes, a plataforma adota dinâmicas e regras estruturadas:
+
+* Acesso Simplificado (Inclusão Digital): O estudante ingressa na plataforma 
+  informando apenas seu nome. Não há necessidade de logins complexos ou senhas, 
+  o que otimiza o tempo de aula e reduz barreiras de acesso.
+* Algoritmo Antifila (Sorteio Individual): Para coibir a cópia de respostas 
+  entre estudantes vizinhos em sala de aula, o sistema realiza um sorteio 
+  dinâmico e individual das questões do banco de dados. Dessa forma, alunos 
+  próximos recebem desafios diferentes, embora de mesmo nível de dificuldade.
+* Geração Procedural Adaptativa: Se o banco de questões configurado pelo 
+  professor não contiver quantidade suficiente de itens cadastrados, o sistema 
+  gera dinamicamente novos desafios válidos de forma procedural. Isso garante 
+  que a partida transcorra de forma contínua e sem interrupções técnicas.
+* Pontuação e Penalidades: Cada resposta correta adiciona um ponto ao escore, 
+  enquanto respostas incorretas subtraem um ponto. Questões ignoradas ou com 
+  tempo limite esgotado não pontuam. Essa regra de pontuação incentiva a 
+  precisão e a reflexão antes da submissão da resposta.
+* Ranking Dinâmico e Desempate: O progresso da turma é exibido em um placar 
+  geral atualizado em tempo real. O ranking prioriza a pontuação acumulada. 
+  Havendo empate, o critério de desempate avalia o tempo total de conclusão da 
+  partida medido com precisão de milissegundos (o menor tempo prevalece).
+
+
+5. O PAPEL DO PROFESSOR COMO MEDIADOR E FACILITADOR
+--------------------------------------------------------------------------------
+O Bitventure 2 posiciona o docente como mediador ativo do processo, munindo-o 
+com ferramentas de controle e acompanhamento diagnóstico:
+
+* Customização Pedagógica: O professor configura, antes da atividade, o tempo 
+  limite para cada nível de dificuldade e o número de questões exigidas para a 
+  progressão. Isso permite adaptar o jogo ao ritmo e nível de cada turma.
+* Controle de Fluxo em Tempo Real: O painel docente oferece um controle global 
+  da atividade. Caso o tempo de aula se encerre, o professor pode acionar um 
+  mecanismo de encerramento programado ("Botão de Parar"), concedendo um tempo 
+  limite final unificado de 2 minutos para que os alunos concluam seus envios.
+* Avaliação Formativa de Resultados: O docente pode exportar todos os dados da 
+  partida (notas finais, tempos de execução e histórico detalhado de erros e 
+  acertos) nos formatos padronizados CSV e JSON, o que facilita a análise 
+  posterior de erros comuns e o planejamento de revisões de conteúdo.
+
+
+6. INFRAESTRUTURA TECNOLÓGICA E ACESSIBILIDADE EM AMBIENTES ESCOLARES
+--------------------------------------------------------------------------------
+Um dos maiores desafios das escolas públicas brasileiras reside na instabilidade 
+ou total ausência de conexões de internet de alta velocidade. Para contornar 
+esta limitação, o Bitventure 2 foi desenvolvido com uma arquitetura técnica 
+específica para salas de aula:
+
+* Paradigma "Offline-First" (Rede Local - LAN): A aplicação opera localmente. 
+  Apenas a máquina do professor necessita executar o servidor da aplicação. 
+  Os alunos conectam-se a uma rede sem fio (Wi-Fi) criada por um roteador comum 
+  desconectado da internet e acessam a ferramenta pelo navegador do celular ou 
+  tablet.
+* Tecnologia de Transmissão Leve (Server-Sent Events - SSE): Em vez de requerer 
+  altas taxas de transferência de rede, o sistema atualiza as pontuações e o 
+  status do ranking por meio de fluxos unidirecionais de dados em tempo real, 
+  garantindo baixo consumo de bateria dos aparelhos e fluidez mesmo com dezenas 
+  de dispositivos conectados.
+* Portabilidade e Persistência Integrada: Utiliza o Next.js no front-end e no 
+  back-end, com persistência de dados gerenciada pelo Prisma ORM integrado ao 
+  SQLite. O SQLite opera como um banco de dados em arquivo local, eliminando a 
+  necessidade de servidores de banco de dados externos complexos e facilitando 
+  a inicialização do sistema com um único comando.
+* Acesso via IP e QR Code: O painel do professor exibe dinamicamente o IP da 
+  rede local e um código QR Code correspondente na tela ou projetor. Os alunos 
+  apenas escaneiam o QR Code para serem direcionados diretamente à partida, 
+  evitando erros de digitação de endereços de rede.
+
+
+7. CONSIDERAÇÕES FINAIS
+--------------------------------------------------------------------------------
+Em síntese, o Bitventure 2 consolida-se como um recurso didático de alto valor 
+para a iniciação à docência em Computação. Ele equilibra o rigor conceitual do 
+estudo de representação de dados com o lúdico da gamificação, estruturando-se 
+em uma infraestrutura física simples, econômica e adequada às realidades de 
+infraestrutura das escolas de educação básica.
+================================================================================

@@ -29,17 +29,17 @@ Todos os dispositivos dos alunos acessarão o sistema através do navegador util
 ## Topologia
 
 ```text
-                   ┌────────────────────┐
-                   │     Projetor       │
-                   │ Ranking Público    │
-                   └─────────┬──────────┘
-                             │
-                             │
+                   ┌───────────────────┐
+                   │     Projetor      │
+                   │ Ranking Público   │
+                   └────────┬──────────┘
+                            │
+                            │
                      Rede Wi-Fi Local
-                             │
-        ┌────────────────────┼────────────────────┐
-        │                    │                    │
-        │                    │                    │
+                            │
+        ┌───────────────────┼───────────────────┐
+        │                   │                   │
+        │                   │                   │
  ┌──────▼─────┐      ┌──────▼─────┐      ┌──────▼─────┐
  │ Aluno 01   │      │ Aluno 02   │      │ Aluno 40   │
  │ Navegador  │      │ Navegador  │      │ Navegador  │

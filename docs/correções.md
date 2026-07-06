@@ -23,10 +23,12 @@ Caso o banco de desafios de um determinado nível não possua itens suficientes 
 * Gerar caracteres ASCII imprimíveis aleatórios.
 * Exemplo: Caractere 'A' → Binário 01000001.
 
-**Nível 3 – Binário → Palavra**
+
+**Nível 3 – Decimal → Palavra**
+* Gerar sequências de códigos decimais ASCII formando palavras ou pseudopalavras.
+* Exemplo: 67 65 84 → CAT.
+
+**Nível 4 – Binário → Palavra**
 * Gerar sequências aleatórias de caracteres ASCII formando palavras ou pseudopalavras.
 * Exemplo: 01000011 01000001 01010100 → CAT.
 
-**Nível 4 – Decimal → Palavra**
-* Gerar sequências de códigos decimais ASCII formando palavras ou pseudopalavras.
-* Exemplo: 67 65 84 → CAT.

@@ -23,8 +23,8 @@ O **Bitventure 2** é uma aplicação web de avaliação gamificada sobre sistem
 * **RF02 – Progressão Gradual de Desafios:** O jogo deve apresentar as questões em ordem crescente de dificuldade, onde cada questão é sorteada dinamicamente do banco de dados para aquele aluno específico e divididas nos seguintes tipos:
 * *Nível 1:* Conversão de Binário para Decimal (e vice-versa).
 * *Nível 2:* Conversão de Binário para Caractere ASCII (e vice-versa).
-* *Nível 3:* Conversão de sequências de Binários em palavras completas (usando a tabela ASCII).
-* *Nível 4:* Conversão de sequências de Decimais em palavras completas (usando a tabela ASCII).
+* *Nível 3:* Conversão de sequências de Decimais em palavras completas (usando a tabela ASCII).
+* *Nível 4:* Conversão de sequências de Binários em palavras completas (usando a tabela ASCII).
 
 * **RF03 – Ferramentas de Apoio:** A interface do aluno deve disponibilizar:
 * Uma calculadora simples de soma.
