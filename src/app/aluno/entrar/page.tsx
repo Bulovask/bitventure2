@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useJogoStore } from "@/src/store/useGameStore";
+import { TerminalTitle, TerminalButton } from "@/src/components/UI";
 
 export default function EntrarPartida() {
   const [nome, setNome] = useState('');
@@ -49,53 +50,63 @@ export default function EntrarPartida() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8 border-t-4 border-blue-600">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Bitventure 2</h1>
-        <p className="text-center text-gray-600 mb-8">Digite seu nome para começar o desafio!</p>
+    <main className="min-h-screen flex items-center justify-center bg-black text-green-500 font-mono p-4">
+      <div className="max-w-md w-full bg-zinc-900/30 border-2 border-green-900 rounded-lg p-6 md:p-8 flex flex-col gap-6 relative shadow-[0_0_30px_rgba(34,197,94,0.05)]">
+        
+        {/* Cabeçalho do Terminal Decoração */}
+        <div className="flex justify-between border-b border-green-900/30 pb-2 mb-2 text-[10px] uppercase tracking-widest text-green-800 select-none">
+          <div>[ DISPOSITIVO: TERMINAL_DISCENTE ]</div>
+          <div className="animate-pulse">● CONECTADO</div>
+        </div>
+
+        <div className="space-y-2">
+          <TerminalTitle 
+            title="BITVENTURE 2" 
+            subtitle="INICIALIZAÇÃO DO CONTEXTO DE AVALIAÇÃO" 
+          />
+          <p className="text-xs text-green-700 uppercase">
+            Por favor, identifique-se para carregar os módulos de numeração binária, caracteres e decodificação ASCII.
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-1">
-              Nome do Aluno
+          <div className="space-y-2">
+            <label htmlFor="nome" className="block text-xs uppercase tracking-widest text-green-700 font-bold">
+              [ NOME_DO_ALUNO ]
             </label>
             <input
               type="text"
               id="nome"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
-              placeholder="Ex: João Silva"
+              placeholder="DIGITE_AQUI..."
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-black"
+              disabled={loading}
+              className="w-full bg-black border-2 border-green-900 p-4 text-center text-xl font-mono text-green-400 focus:outline-none focus:border-green-500 transition-all uppercase placeholder-green-900"
               autoFocus
             />
           </div>
 
           {error && (
-            <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm border border-red-200">
-              {error}
+            <div className="bg-red-950/20 text-red-500 p-3 rounded border border-red-900 text-xs font-mono uppercase tracking-wider">
+              [ ERRO_DE_CONEXÃO: {error} ]
             </div>
           )}
 
-          <button
+          <TerminalButton
+            label={loading ? "CONECTANDO..." : "INICIAR_PARTIDA"}
             type="submit"
             disabled={loading || !nome.trim()}
-            className={`w-full py-3 px-4 rounded-md text-white font-bold text-lg shadow-md transition-all ${
-              loading || !nome.trim()
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-blue-600 hover:bg-blue-700 active:scale-[0.98]'
-            }`}
-          >
-            {loading ? 'Entrando...' : 'Entrar na Partida'}
-          </button>
+            className="w-full px-4 text-xs md:text-sm"
+          />
         </form>
 
-        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-          <p className="text-xs text-gray-400 uppercase tracking-widest">
-            Avaliação de Sistemas de Numeração
+        <div className="mt-4 pt-4 border-t border-green-900/30 text-center">
+          <p className="text-[9px] text-green-800 uppercase tracking-widest select-none">
+            PROGRAMA DE INICIAÇÃO À DOCÊNCIA — PIBID COMPUTAÇÃO
           </p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
