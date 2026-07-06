@@ -15,17 +15,26 @@ export default function RankingPagina() {
   const [ranking, setRanking] = useState<AlunoRanking[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const carregarRanking = async () => {
+    try {
+      const res = await fetch('/api/ranking');
+      const data = await res.json();
+      setRanking(data);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetch('/api/ranking')
-      .then((res) => res.json())
-      .then((data) => {
-        setRanking(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
+    carregarRanking();
+
+    const intervalo = window.setInterval(() => {
+      carregarRanking();
+    }, 5000);
+
+    return () => window.clearInterval(intervalo);
   }, []);
 
   const formatarTempo = (msStr: string | null) => {
@@ -43,7 +52,7 @@ export default function RankingPagina() {
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-12">
-          <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-600">
+          <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-yellow-400 to-orange-600">
             Ranking Global
           </h1>
           <Link href="/" className="bg-gray-800 hover:bg-gray-700 px-6 py-2 rounded-lg border border-gray-700 transition-colors">
