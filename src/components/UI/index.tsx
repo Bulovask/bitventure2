@@ -2,7 +2,7 @@ import React from 'react';
 
 // 1. Logs de Sistema (o texto verde escuro no topo)
 export const TerminalLogs = ({ logs }: { logs: string[] }) => (
-  <div className="w-full space-y-1 text-xs md:text-sm text-green-850 uppercase select-none opacity-85 bg-green-50/50 p-2 border border-green-150 rounded">
+  <div className="w-full space-y-1 text-xs md:text-sm text-green-850 font-bold uppercase select-none opacity-85 bg-green-50/50 p-2 border border-green-150 rounded">
     {logs.map((log, i) => (
       <p key={i}>[ OK ] {log}</p>
     ))}
@@ -15,7 +15,7 @@ export const TerminalTitle = ({ title, subtitle }: { title: string; subtitle?: s
     <h1 className="text-2xl md:text-4xl font-black tracking-tighter text-green-750 uppercase">
       {title}_
     </h1>
-    {subtitle && <p className="text-green-800 text-xs md:text-sm uppercase font-bold tracking-wider">{subtitle}</p>}
+    {subtitle && <p className="text-green-800 text-xs md:text-sm uppercase font-black tracking-wider">{subtitle}</p>}
   </div>
 );
 
@@ -27,7 +27,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export const TerminalButton = ({ label, className, ...props }: ButtonProps) => (
   <button
     {...props}
-    className={`group relative overflow-hidden border border-green-750 px-10 py-2 font-bold text-green-850 bg-green-50/30 hover:text-white transition-colors duration-300 cursor-pointer rounded ${className}`}
+    className={`group relative overflow-hidden border border-green-750 px-10 py-2 font-black text-green-850 bg-green-50/30 hover:text-white transition-colors duration-300 cursor-pointer rounded ${className}`}
   >
     <div className="absolute inset-0 bg-green-750 translate-y-full group-hover:translate-y-0 transition-transform duration-300 -z-10" />
     <span className="relative z-10 uppercase">[ {label} ]</span>
@@ -39,7 +39,7 @@ export const TerminalButton = ({ label, className, ...props }: ButtonProps) => (
 export const StatusBadge = ({ success, label }: { success: boolean; label: string }) => (
   <div className="flex items-start gap-3 bg-zinc-50 border border-zinc-200/60 p-2 rounded shadow-sm">
     <div className={`w-2.5 h-2.5 mt-1 rounded-full animate-pulse ${success ? 'bg-green-600 shadow-[0_0_8px_rgba(22,163,74,0.6)]' : 'bg-red-650 shadow-[0_0_8px_rgba(220,38,38,0.6)]'}`} />
-    <p className={`text-sm font-bold uppercase ${success ? 'text-green-750' : 'text-red-700'}`}>
+    <p className={`text-sm font-black uppercase ${success ? 'text-green-750' : 'text-red-700'}`}>
       {label}
     </p>
   </div>
@@ -48,10 +48,10 @@ export const StatusBadge = ({ success, label }: { success: boolean; label: strin
 // 5. Container de Informação (Usado para Operador e Score)
 export const InfoBlock = ({ label, value, highlight = false }: { label: string; value: string | number; highlight?: boolean }) => (
   <div className={`min-w-0 flex-1 p-3 rounded border ${highlight ? 'bg-blue-50 border-blue-200 shadow-sm' : 'bg-emerald-50 border-emerald-150'}`}>
-    <span className={`text-[10px] uppercase font-bold tracking-widest block mb-1 ${highlight ? 'text-blue-750' : 'text-emerald-800'}`}>
+    <span className={`text-[10px] uppercase font-black tracking-widest block mb-1 ${highlight ? 'text-blue-750' : 'text-emerald-800'}`}>
       {label}
     </span>
-    <p className={`font-bold truncate ${highlight ? 'text-2xl text-blue-800 whitespace-nowrap' : 'text-xl md:text-2xl text-zinc-950'}`}>
+    <p className={`font-black truncate ${highlight ? 'text-2xl text-blue-800 whitespace-nowrap' : 'text-xl md:text-2xl text-zinc-950'}`}>
       {value}
     </p>
   </div>
@@ -59,11 +59,11 @@ export const InfoBlock = ({ label, value, highlight = false }: { label: string; 
 
 // 6. Header de Status Superior
 export const TerminalHeader = ({ items }: { items: { label: string; value: string | number }[] }) => (
-  <header className="flex justify-between border border-green-200/80 bg-green-50/30 px-3 py-2 rounded mb-2 text-[10px] md:text-xs tracking-widest uppercase">
+  <header className="flex justify-between border border-green-200/80 bg-green-50/30 px-3 py-2 rounded mb-2 text-[10px] md:text-xs tracking-widest uppercase font-bold">
     {items.map((item, i) => (
       <div key={i} className="flex gap-2">
         <span className="text-green-800 font-bold">{item.label}:</span>
-        <span className="text-green-750 font-bold">{item.value}</span>
+        <span className="text-green-755 font-extrabold">{item.value}</span>
       </div>
     ))}
   </header>

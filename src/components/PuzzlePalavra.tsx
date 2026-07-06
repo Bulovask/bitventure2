@@ -81,7 +81,7 @@ export default function PuzzlePalavra({ enunciado, respostaCorreta, tipo, onAcer
         }`}>
           {erro ? '[ ALERTA: PALAVRA_CORROMPIDA ]' : tipo === 'BINARIO_PALAVRA' ? '[ MODO: DECODIFICADOR_DE_PALAVRA_BINARIA ]' : '[ MODO: DECODIFICADOR_DE_PALAVRA_DECIMAL ]'}
         </p>
-        <h2 className="text-sm text-zinc-950 opacity-80 italic font-mono uppercase">
+        <h2 className="text-sm text-zinc-950 opacity-80 italic font-mono uppercase font-bold">
           Traduza os códigos para revelar a palavra oculta:
         </h2>
       </div>
@@ -97,7 +97,7 @@ export default function PuzzlePalavra({ enunciado, respostaCorreta, tipo, onAcer
 
       <form onSubmit={verificarResposta} className="w-full max-w-sm space-y-4">
         <div className="flex flex-col items-center gap-2">
-          <label className={`text-[10px] font-mono uppercase transition-colors ${erro ? 'text-red-650' : 'text-amber-800'}`}>
+          <label className={`text-[10px] font-mono uppercase font-bold transition-colors ${erro ? 'text-red-650' : 'text-amber-800'}`}>
             {erro ? 'ENTRADA_INVÁLIDA' : 'Palavra Decodificada:'}
           </label>
           <input

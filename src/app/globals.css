@@ -11,6 +11,17 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  /* Global Typography Size Scale Increase */
+  --font-size-xs: 0.825rem;    /* Default: 0.75rem */
+  --font-size-sm: 0.95rem;     /* Default: 0.875rem */
+  --font-size-base: 1.075rem;  /* Default: 1rem */
+  --font-size-lg: 1.2rem;      /* Default: 1.125rem */
+  --font-size-xl: 1.35rem;     /* Default: 1.25rem */
+  --font-size-2xl: 1.625rem;   /* Default: 1.5rem */
+  --font-size-3xl: 2.0rem;     /* Default: 1.875rem */
+  --font-size-4xl: 2.4rem;     /* Default: 2.25rem */
+  --font-size-5xl: 3.25rem;    /* Default: 3rem */
+
   /* Gray / Slate & Zinc overrides to break extreme white and make it alive */
   --color-slate-50: #f0f4f8; /* Soft light slate blue-gray */
   --color-slate-100: #e2eaf1;

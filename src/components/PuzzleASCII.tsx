@@ -90,7 +90,7 @@ export default function PuzzleASCII({ letraObjetivo, onAcerto, pontos }: Props) 
         }`}>
           {erro ? '[ ALERTA: SINAL_CORROMPIDO ]' : '[ MODO: INTERPRETADOR_ASCII ]'}
         </p>
-        <h2 className="text-sm text-zinc-950 opacity-80 italic font-mono uppercase">
+        <h2 className="text-sm text-zinc-950 opacity-80 italic font-mono uppercase font-bold">
           Converta o sinal de bits para o caractere Alfanumérico:
         </h2>
       </div>
@@ -114,7 +114,7 @@ export default function PuzzleASCII({ letraObjetivo, onAcerto, pontos }: Props) 
 
       <form onSubmit={verificarResposta} className="w-full max-w-sm space-y-4">
         <div className="flex flex-col items-center gap-2">
-          <label className={`text-[10px] font-mono uppercase transition-colors ${erro ? 'text-red-650' : 'text-blue-800'}`}>
+          <label className={`text-[10px] font-mono uppercase font-bold transition-colors ${erro ? 'text-red-650' : 'text-blue-800'}`}>
             {erro ? 'ENTRADA_INVÁLIDA' : 'Caractere Detectado:'}
           </label>
           <input

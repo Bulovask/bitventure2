@@ -90,7 +90,7 @@ export default function PuzzleReverseASCII({ letraObjetivo, onAcerto, pontos }: 
         }`}>
           {erroCritico ? "[ ALERTA: OVERFLOW_ASCII ]" : "[ MODO: CODIFICADOR_ASCII ]"}
         </p>
-        <h2 className="text-sm text-zinc-950 opacity-80 italic font-mono uppercase">
+        <h2 className="text-sm text-zinc-950 opacity-80 italic font-mono uppercase font-bold">
           Gere o caractere objetivo através dos bits:
         </h2>
       </div>
@@ -116,7 +116,7 @@ export default function PuzzleReverseASCII({ letraObjetivo, onAcerto, pontos }: 
       <div className={`text-center p-3 border rounded-md w-full max-w-sm transition-all shadow-sm ${
         erroCritico ? "bg-red-50 border-red-300" : "bg-white border-purple-250"
       }`}>
-        <p className="text-xs text-purple-900 font-mono">
+        <p className="text-xs text-purple-900 font-mono font-bold">
           Soma: <span className={`text-xl font-bold ${erroCritico ? "text-red-650" : "text-zinc-950"}`}>{somaAtual}</span>
           <span className="mx-2 opacity-35">|</span>
           Char: <span className="font-bold text-2xl text-purple-800 font-sans">{caractereAtual}</span>

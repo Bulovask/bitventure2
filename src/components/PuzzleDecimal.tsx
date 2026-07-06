@@ -99,7 +99,7 @@ export default function PuzzleDecimal({
         }`}>
           {erro ? "[ ALERTA: PARIDADE_INCÓRRETA ]" : "[ MODO: DECODIFICAÇÃO_INVERSA ]"}
         </p>
-        <h2 className="text-sm text-zinc-950 opacity-80 italic uppercase font-mono">
+        <h2 className="text-sm text-zinc-950 opacity-80 italic uppercase font-mono font-bold">
           Traduza o sinal de bits para decimal:
         </h2>
       </div>
@@ -139,7 +139,7 @@ export default function PuzzleDecimal({
             disabled={sucesso || (erros >= 3)}
             onChange={(e) => setInputValor(e.target.value)}
             placeholder="RESPOSTA_?"
-            className={`w-full bg-white border-2 p-4 text-center text-3xl font-mono focus:outline-none transition-all rounded-md ${
+            className={`w-full bg-white border-2 p-4 text-center text-3xl font-mono font-bold focus:outline-none transition-all rounded-md ${
               erro
                 ? "border-red-550 text-red-600 focus:border-red-600"
                 : "border-emerald-350 focus:border-emerald-600 text-emerald-800"
